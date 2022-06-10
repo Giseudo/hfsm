@@ -15,14 +15,14 @@ namespace Demo1
             LoadSubState(walkState);
             LoadSubState(runState);
 
-            AddTransition(idleState, walkState, Triggers.WALK);
-            AddTransition(idleState, runState, Triggers.RUN);
+            AddTransition(idleState, walkState, new Condition[]{ new IsMovingCondition(stateMachine) });
+            AddTransition(idleState, runState, new Condition[]{ new IsMovingCondition(stateMachine), new IsRunningCondition(stateMachine) }, Operator.And);
 
-            AddTransition(walkState, idleState, Triggers.STOP);
-            AddTransition(walkState, runState, Triggers.RUN);
+            AddTransition(walkState, idleState, new Condition[]{ new IsMovingCondition(stateMachine, true) });
+            AddTransition(walkState, runState, new Condition[]{ new IsMovingCondition(stateMachine), new IsRunningCondition(stateMachine) }, Operator.And);
 
-            AddTransition(runState, idleState, Triggers.STOP);
-            AddTransition(runState, walkState, Triggers.WALK);
+            AddTransition(runState, idleState, new Condition[]{ new IsMovingCondition(stateMachine, true) });
+            AddTransition(runState, walkState, new Condition[]{ new IsMovingCondition(stateMachine), new IsRunningCondition(stateMachine, true) }, Operator.And);
         }
 
         protected override void OnUpdate()
