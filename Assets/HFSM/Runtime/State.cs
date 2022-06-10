@@ -93,12 +93,10 @@ namespace HFSM
             if (_transitions.TryGetValue(from.GetType(), out List<Transition> transitions))
             {
                 transitions.Add(transition);
-                Debug.Log($"Append {from.GetType()} - to {to.GetType()}");
                 return;
             }
 
             _transitions.Add(from.GetType(), new List<Transition> { transition });
-            Debug.Log($"Create {from.GetType()} - to {to.GetType()}");
         }
 
         public void EnterTransitions()
@@ -130,7 +128,6 @@ namespace HFSM
                 Transition transition = transitions[i];
 
                 transition.Exit();
-                Debug.Log("Exited transition");
             }
         }
 
@@ -150,7 +147,6 @@ namespace HFSM
 
                 if (transition.Triggered)
                 {
-                    Debug.Log($"Triggered {transition.To.GetType()}");
                     ChangeSubState(transition.To);
                     return;
                 }
