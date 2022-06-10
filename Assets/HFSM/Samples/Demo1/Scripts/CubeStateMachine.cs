@@ -3,9 +3,9 @@ using HFSM;
 
 namespace Demo1
 {
-    public class HumanStateMachine : StateMachine
+    public class CubeStateMachine : StateMachine
     {
-        public HumanStateMachine(GameObject context) : base (context)
+        public CubeStateMachine(GameObject context) : base (context)
         {
             State groundedState = new GroundedState(this);
             // State jumpState = new JumpState(this);

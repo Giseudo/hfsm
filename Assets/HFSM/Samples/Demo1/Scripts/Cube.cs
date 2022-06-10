@@ -6,11 +6,11 @@ namespace Demo1
     public class Cube : MonoBehaviour
     {
         [SerializeField]
-        private HumanStateMachine _stateMachine;
+        private CubeStateMachine _stateMachine;
 
         void Awake()
         {
-            _stateMachine = new HumanStateMachine(gameObject);
+            _stateMachine = new CubeStateMachine(gameObject);
         }
 
         void OnEnable()
