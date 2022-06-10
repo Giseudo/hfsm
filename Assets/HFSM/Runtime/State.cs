@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HFSM
 {
@@ -11,7 +13,7 @@ namespace HFSM
         private StateMachine _stateMachine;
 
         private Dictionary<Type, State> _subStates = new Dictionary<Type, State>();
-        private Dictionary<string, State> _transitions = new Dictionary<string, State>();
+        private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
 
         public StateMachine StateMachine => _stateMachine;
 
@@ -34,6 +36,8 @@ namespace HFSM
 
         public void UpdateState()
         {
+            UpdateTransitions();
+
             OnUpdate();
 
             _currentSubState?.UpdateState();
@@ -72,8 +76,7 @@ namespace HFSM
 
         }
 
-        // State from, State to, Array<Condition>, Operator operator (and | or)
-        public void AddTransition(State from, State to, string trigger)
+        public void AddTransition(State from, State to, Condition[] conditions, Operator operation = Operator.Or)
         {
             if (!_subStates.TryGetValue(from.GetType(), out _))
             {
@@ -85,49 +88,81 @@ namespace HFSM
                 throw new InvalidTransitionException($"State {GetType()} does not have a substate of type {to.GetType()} to transition from.");
             }
 
-            try
+            Transition transition = new Transition(from, to, conditions, operation);
+
+            if (_transitions.TryGetValue(from.GetType(), out List<Transition> transitions))
             {
-                from._transitions.Add(trigger, to);
-            }
-            catch (ArgumentException)
-            {
-                throw new DuplicateTransitionException($"State {from} already has a transition defined for trigger {trigger}");
+                transitions.Add(transition);
+                return;
             }
 
+            _transitions.Add(from.GetType(), new List<Transition> { transition });
         }
 
-        public void SendTrigger(string trigger)
+        public void EnterTransitions()
         {
-            var root = this;
+            if (_currentSubState == null)
+                return;
 
-            while (root?._parent != null)
+            if (!_transitions.TryGetValue(_currentSubState.GetType(), out List<Transition> transitions))
+                return;
+
+            for (int i = 0; i < transitions.Count; i++)
             {
-                root = root._parent;
+                Transition transition = transitions[i];
+
+                transition.Enter();
             }
+        }
 
-            while (root != null)
+        public void ExitTransitions()
+        {
+            if (_currentSubState == null)
+                return;
+
+            if (!_transitions.TryGetValue(_currentSubState.GetType(), out List<Transition> transitions))
+                return;
+
+            for (int i = 0; i < transitions.Count; i++)
             {
-                if (root._transitions.TryGetValue(trigger, out State toState))
-                {
-                    root._parent?.ChangeSubState(toState);
+                Transition transition = transitions[i];
 
+                transition.Exit();
+            }
+        }
+
+        public void UpdateTransitions()
+        {
+            if (_currentSubState == null)
+                return;
+
+            if (!_transitions.TryGetValue(_currentSubState.GetType(), out List<Transition> transitions))
+                return;
+
+            for (int i = 0; i < transitions.Count; i++)
+            {
+                Transition transition = transitions[i];
+
+                transition.Update();
+
+                if (transition.Triggered)
+                {
+                    ChangeSubState(transition.To);
                     return;
                 }
-
-                root = root._currentSubState;
             }
-
-            throw new NeglectedTriggerException($"Trigger {trigger} was not consumed by any transition!");
         }
 
         private void ChangeSubState(State state)
         {
             _currentSubState?.ExitState();
+            ExitTransitions();
 
             var newState = _subStates[state.GetType()];
 
             _currentSubState = newState;
             newState.EnterState();
+            EnterTransitions();
         }
     }
 }
