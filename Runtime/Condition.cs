@@ -13,9 +13,12 @@ namespace HFSM
             _stateMachine = stateMachine;
         }
 
-        public void EnterState() => OnEnter();
-        public void UpdateState() => OnUpdate();
-        public void ExitState() => OnExit();
+        public void Enter() => OnEnter();
+        public void Update() => OnUpdate();
+        public void Exit() {
+            OnExit();
+            Reset();
+        }
 
         protected virtual void OnEnter() { }
         protected virtual void OnUpdate() { }

@@ -26,16 +26,6 @@ namespace Demo1
         void Update()
         {
             _stateMachine.Update();
-
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                _stateMachine.Root.SendTrigger(Triggers.JUMP);
-            }
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                _stateMachine.Root.SendTrigger(Triggers.RUN);
-            }
         }
     }
 }

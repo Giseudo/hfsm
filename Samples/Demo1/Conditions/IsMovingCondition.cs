@@ -3,21 +3,20 @@ using HFSM;
 
 public class IsMovingCondition : Condition
 {
-    private CharacterController _controller;
     private bool _negate;
 
-    public IsMovingCondition(StateMachine stateMachine, bool negate) : base(stateMachine)
+    public IsMovingCondition(StateMachine stateMachine, bool negate = false) : base(stateMachine)
     {
-        stateMachine.Context.TryGetComponent<CharacterController>(out _controller);
-
         _negate = negate;
     }
 
     protected override void OnUpdate()
     {
-        float speed = _controller.velocity.magnitude;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        bool isMoving = Mathf.Abs(horizontal) > .1f || Mathf.Abs(vertical) > .1f;
 
-        if (speed > 0f || speed == 0f && _negate)
+        if (isMoving && !_negate || !isMoving && _negate)
             Trigger();
         else
             Reset();
