@@ -8,7 +8,10 @@ namespace HFSM
         public StateMachine StateMachine => _stateMachine;
         public bool Triggered => _triggered;
 
-        public Condition(StateMachine stateMachine)
+        public Condition()
+        { }
+
+        public virtual void Start(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
         }
