@@ -7,7 +7,7 @@ namespace Demo1
     {
         public CubeStateMachine(GameObject context) : base (context)
         {
-            State groundedState = new GroundedState(this);
+            State groundedState = new GroundedState();
             // State jumpState = new JumpState(this);
             // State fallState = new FallState(this);
 
@@ -27,6 +27,7 @@ namespace Demo1
 
         public override void Start()
         {
+            Root.StartState(this);
             Root.EnterState();
         }
 

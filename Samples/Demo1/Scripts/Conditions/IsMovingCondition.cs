@@ -5,7 +5,7 @@ public class IsMovingCondition : Condition
 {
     private bool _negate;
 
-    public IsMovingCondition(StateMachine stateMachine, bool negate = false) : base(stateMachine)
+    public IsMovingCondition(bool negate = false)
     {
         _negate = negate;
     }

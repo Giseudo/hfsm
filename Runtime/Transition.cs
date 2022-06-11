@@ -25,6 +25,16 @@ namespace HFSM
         private void Trigger() => _triggered = true;
         private void Reset() => _triggered = false;
 
+        public void Start(StateMachine stateMachine)
+        {
+            for (int i = 0; i < _conditions.Length; i++)
+            {
+                Condition condition = _conditions[i];
+
+                condition.Start(stateMachine);
+            }
+        }
+
         public void Enter()
         {
             for (int i = 0; i < _conditions.Length; i++)

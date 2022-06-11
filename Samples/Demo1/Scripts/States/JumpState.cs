@@ -3,8 +3,6 @@ using HFSM;
 
 public class JumpState : State
 {
-    public JumpState(StateMachine stateMachine) : base(stateMachine) { }
-
     protected override void OnEnter()
     {
         Debug.Log("Enter JumpState");

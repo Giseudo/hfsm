@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HFSM
 {
-    public class State
+    public abstract class State
     {
         private State _currentSubState;
         private State _defaultSubState;
@@ -17,9 +17,15 @@ namespace HFSM
 
         public StateMachine StateMachine => _stateMachine;
 
-        public State(StateMachine stateMachine)
+        public void StartState(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
+
+            OnStart();
+
+            var subStates = _subStates.Values.ToList();
+
+            subStates.ForEach(state => state.StartState(stateMachine));
         }
 
         public void EnterState()
@@ -50,10 +56,9 @@ namespace HFSM
             OnExit();
         }
 
+        protected virtual void OnStart() { }
         protected virtual void OnEnter() { }
-
         protected virtual void OnUpdate() { }
-
         protected virtual void OnExit() { }
 
         public void LoadSubState(State subState)
