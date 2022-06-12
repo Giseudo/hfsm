@@ -5,12 +5,12 @@ public class IsMovingCondition : Condition
 {
     private bool _negate;
 
-    public IsMovingCondition(StateMachine stateMachine, bool negate = false) : base(stateMachine)
+    public IsMovingCondition(bool negate = false)
     {
         _negate = negate;
     }
 
-    protected override void OnUpdate()
+    public override void OnUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");

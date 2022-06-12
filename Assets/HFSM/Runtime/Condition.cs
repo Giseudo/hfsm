@@ -8,21 +8,25 @@ namespace HFSM
         public StateMachine StateMachine => _stateMachine;
         public bool Triggered => _triggered;
 
-        public Condition(StateMachine stateMachine)
+        public void Start(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
+            OnStart();
         }
 
         public void Enter() => OnEnter();
+
         public void Update() => OnUpdate();
+
         public void Exit() {
-            OnExit();
             Reset();
+            OnExit();
         }
 
-        protected virtual void OnEnter() { }
-        protected virtual void OnUpdate() { }
-        protected virtual void OnExit() { }
+        public virtual void OnStart() { }
+        public virtual void OnEnter() { }
+        public virtual void OnUpdate() { }
+        public virtual void OnExit() { }
 
         public void Reset() => _triggered = false;
         public void Trigger() => _triggered = true;

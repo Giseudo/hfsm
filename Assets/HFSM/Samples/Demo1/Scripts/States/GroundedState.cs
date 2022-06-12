@@ -5,24 +5,69 @@ namespace Demo1
 {
     public class GroundedState : State
     {
-        public GroundedState(StateMachine stateMachine) : base(stateMachine)
+        State _idleState = new IdleState();
+        State _walkState = new WalkState();
+        State _runState = new RunState();
+
+        public GroundedState()
         {
-            State idleState = new IdleState(stateMachine);
-            State walkState = new WalkState(stateMachine);
-            State runState = new RunState(stateMachine);
+            LoadSubState(_idleState);
+            LoadSubState(_walkState);
+            LoadSubState(_runState);
 
-            LoadSubState(idleState);
-            LoadSubState(walkState);
-            LoadSubState(runState);
+            // Idle transitions
+            AddTransition(
+                _idleState,
+                _runState,
+                new Condition[] {
+                    new IsMovingCondition(),
+                    new IsRunningCondition()
+                },
+                Operator.And
+            );
+            AddTransition(
+                _idleState,
+                _walkState,
+                new Condition[] {
+                    new IsMovingCondition()
+                }
+            );
 
-            AddTransition(idleState, walkState, new Condition[]{ new IsMovingCondition(stateMachine) });
-            AddTransition(idleState, runState, new Condition[]{ new IsMovingCondition(stateMachine), new IsRunningCondition(stateMachine) }, Operator.And);
+            // Walk transitions
+            AddTransition(
+                _walkState,
+                _idleState,
+                new Condition[] {
+                    new IsMovingCondition(true)
+                }
+            );
+            AddTransition(
+                _walkState,
+                _runState,
+                new Condition[] {
+                    new IsMovingCondition(),
+                    new IsRunningCondition()
+                },
+                Operator.And
+            );
 
-            AddTransition(walkState, idleState, new Condition[]{ new IsMovingCondition(stateMachine, true) });
-            AddTransition(walkState, runState, new Condition[]{ new IsMovingCondition(stateMachine), new IsRunningCondition(stateMachine) }, Operator.And);
-
-            AddTransition(runState, idleState, new Condition[]{ new IsMovingCondition(stateMachine, true) });
-            AddTransition(runState, walkState, new Condition[]{ new IsMovingCondition(stateMachine), new IsRunningCondition(stateMachine, true) }, Operator.And);
+            // Run transitions
+            AddTransition(
+                _runState,
+                _idleState,
+                new Condition[]{
+                    new IsMovingCondition(true)
+                }
+            );
+            AddTransition(
+                _runState,
+                _walkState,
+                new Condition[]{
+                    new IsMovingCondition(),
+                    new IsRunningCondition(true)
+                },
+                Operator.And
+            );
         }
 
         protected override void OnUpdate()

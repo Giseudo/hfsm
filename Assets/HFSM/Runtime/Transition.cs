@@ -14,7 +14,7 @@ namespace HFSM
         public Operator Operation => _operation;
         public bool Triggered => _triggered;
 
-        public Transition(State from, State to, Condition[] conditions, Operator operation)
+        public Transition(State from, State to, Condition[] conditions, Operator operation = Operator.Or)
         {
             _from = from;
             _to = to;
@@ -24,6 +24,16 @@ namespace HFSM
 
         private void Trigger() => _triggered = true;
         private void Reset() => _triggered = false;
+
+        public void Start(StateMachine stateMachine)
+        {
+            for (int i = 0; i < _conditions.Length; i++)
+            {
+                Condition condition = _conditions[i];
+
+                condition.Start(stateMachine);
+            }
+        }
 
         public void Enter()
         {
@@ -37,13 +47,23 @@ namespace HFSM
 
         public void Update()
         {
-            int validCount = 0;
-
             for (int i = 0; i < _conditions.Length; i++)
             {
                 Condition condition = _conditions[i];
 
                 condition.Update();
+            }
+
+            Validate();
+       }
+
+        public void Validate()
+        {
+            int validCount = 0;
+
+            for (int i = 0; i < _conditions.Length; i++)
+            {
+                Condition condition = _conditions[i];
 
                 if (condition.Triggered)
                     validCount++;

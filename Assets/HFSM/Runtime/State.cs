@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HFSM
 {
-    public class State
+    public abstract class State
     {
         private State _currentSubState;
         private State _defaultSubState;
@@ -15,53 +15,54 @@ namespace HFSM
         private Dictionary<Type, State> _subStates = new Dictionary<Type, State>();
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
 
+        public State CurrentSubState => _currentSubState;
         public StateMachine StateMachine => _stateMachine;
+        public Dictionary<Type, State> SubStates => _subStates;
+        public Dictionary<Type, List<Transition>> Transitions => _transitions;
 
-        public State(StateMachine stateMachine)
+        public void Start(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
+
+            OnStart();
+
+            var subStates = _subStates.Values.ToList();
+
+            subStates.ForEach(state => state.Start(stateMachine));
         }
 
-        public void EnterState()
+        public void Enter()
         {
             OnEnter();
 
             if (_currentSubState == null && _defaultSubState != null)
-            {
                 _currentSubState = _defaultSubState;
-            }
 
-            _currentSubState?.EnterState();
+            _currentSubState?.Enter();
+            EnterTransitions();
         }
 
-        public void UpdateState()
+        public void Update()
         {
             UpdateTransitions();
 
             OnUpdate();
 
-            _currentSubState?.UpdateState();
+            _currentSubState?.Update();
         }
 
-        public void ExitState()
+        public void Exit()
         {
-            _currentSubState?.ExitState();
+            _currentSubState?.Exit();
+            ExitTransitions();
 
             OnExit();
         }
 
-        protected virtual void OnEnter() { }
-
-        protected virtual void OnUpdate() { }
-
-        protected virtual void OnExit() { }
-
         public void LoadSubState(State subState)
         {
             if (_subStates.Count == 0)
-            {
                 _defaultSubState = subState;
-            }
 
             subState._parent = this;
 
@@ -78,17 +79,21 @@ namespace HFSM
 
         public void AddTransition(State from, State to, Condition[] conditions, Operator operation = Operator.Or)
         {
+            Transition transition = new Transition(from, to, conditions, operation);
+
+            AddTransition(transition);
+        }
+
+        public void AddTransition(Transition transition)
+        {
+            State from = transition.From;
+            State to = transition.To;
+
             if (!_subStates.TryGetValue(from.GetType(), out _))
-            {
                 throw new InvalidTransitionException($"State {GetType()} does not have a substate of type {from.GetType()} to transition from.");
-            }
 
             if (!_subStates.TryGetValue(to.GetType(), out _))
-            {
                 throw new InvalidTransitionException($"State {GetType()} does not have a substate of type {to.GetType()} to transition from.");
-            }
-
-            Transition transition = new Transition(from, to, conditions, operation);
 
             if (_transitions.TryGetValue(from.GetType(), out List<Transition> transitions))
             {
@@ -155,14 +160,19 @@ namespace HFSM
 
         private void ChangeSubState(State state)
         {
-            _currentSubState?.ExitState();
+            _currentSubState?.Exit();
             ExitTransitions();
 
             var newState = _subStates[state.GetType()];
 
             _currentSubState = newState;
-            newState.EnterState();
+            newState.Enter();
             EnterTransitions();
         }
+
+        protected virtual void OnStart() { }
+        protected virtual void OnEnter() { }
+        protected virtual void OnUpdate() { }
+        protected virtual void OnExit() { }
     }
 }

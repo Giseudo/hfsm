@@ -5,12 +5,12 @@ public class IsRunningCondition : Condition
 {
     private bool _negate;
 
-    public IsRunningCondition(StateMachine stateMachine, bool negate = false) : base(stateMachine)
+    public IsRunningCondition(bool negate = false)
     {
         _negate = negate;
     }
 
-    protected override void OnUpdate()
+    public override void OnUpdate()
     {
         bool isRunning = Input.GetButton("Run");
 

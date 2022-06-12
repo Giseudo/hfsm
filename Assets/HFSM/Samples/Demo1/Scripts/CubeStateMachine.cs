@@ -7,7 +7,7 @@ namespace Demo1
     {
         public CubeStateMachine(GameObject context) : base (context)
         {
-            State groundedState = new GroundedState(this);
+            State groundedState = new GroundedState();
             // State jumpState = new JumpState(this);
             // State fallState = new FallState(this);
 
@@ -23,21 +23,6 @@ namespace Demo1
 
             Root.AddTransition(fallState, groundedState, Triggers.LAND);
             */
-        }
-
-        public override void Start()
-        {
-            Root.EnterState();
-        }
-
-        public override void Update()
-        {
-            Root.UpdateState();
-        }
-
-        public override void Stop()
-        {
-            Root.ExitState();
         }
     }
 }
