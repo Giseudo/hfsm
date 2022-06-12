@@ -27,5 +27,8 @@ namespace HFSM
         public virtual void Stop() {
             Root.Exit();
         }
+
+        public void SetVariable<T>() {}
+        public void GetVariable<T>() {}
     }
 }
