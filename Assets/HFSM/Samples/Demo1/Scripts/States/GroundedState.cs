@@ -9,7 +9,7 @@ namespace Demo1
         State _walkState = new WalkState();
         State _runState = new RunState();
 
-        public GroundedState()
+        protected override void OnStart()
         {
             LoadSubState(_idleState);
             LoadSubState(_walkState);
@@ -68,11 +68,6 @@ namespace Demo1
                 },
                 Operator.And
             );
-        }
-
-        protected override void OnUpdate()
-        {
-            Debug.Log("Grounded - Apply gravity");
         }
     }
 }
