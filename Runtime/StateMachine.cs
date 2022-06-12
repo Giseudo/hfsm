@@ -15,8 +15,17 @@ namespace HFSM
             _context = context;
         }
 
-        public virtual void Start() { }
-        public virtual void Stop() { }
-        public virtual void Update() { }
+        public virtual void Start() {
+            Root.Start(this);
+            Root.Enter();
+        }
+
+        public virtual void Update() {
+            Root.Update();
+        }
+
+        public virtual void Stop() {
+            Root.Exit();
+        }
     }
 }

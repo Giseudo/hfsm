@@ -124,10 +124,7 @@ public class TransitionTest
 
     public class EnterCondition : Condition
     {
-        public override void OnEnter()
-        {
-            Trigger();
-        }
+        public override void OnEnter() => Trigger();
     }
 
     public class EmptyCondition : Condition

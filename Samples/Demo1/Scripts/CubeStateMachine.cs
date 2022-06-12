@@ -24,21 +24,5 @@ namespace Demo1
             Root.AddTransition(fallState, groundedState, Triggers.LAND);
             */
         }
-
-        public override void Start()
-        {
-            Root.Start(this);
-            Root.Enter();
-        }
-
-        public override void Update()
-        {
-            Root.Update();
-        }
-
-        public override void Stop()
-        {
-            Root.Exit();
-        }
     }
 }

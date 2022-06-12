@@ -15,7 +15,10 @@ namespace HFSM
         private Dictionary<Type, State> _subStates = new Dictionary<Type, State>();
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
 
+        public State CurrentSubState => _currentSubState;
         public StateMachine StateMachine => _stateMachine;
+        public Dictionary<Type, State> SubStates => _subStates;
+        public Dictionary<Type, List<Transition>> Transitions => _transitions;
 
         public void Start(StateMachine stateMachine)
         {
@@ -33,11 +36,10 @@ namespace HFSM
             OnEnter();
 
             if (_currentSubState == null && _defaultSubState != null)
-            {
                 _currentSubState = _defaultSubState;
-            }
 
             _currentSubState?.Enter();
+            EnterTransitions();
         }
 
         public void Update()
@@ -52,21 +54,15 @@ namespace HFSM
         public void Exit()
         {
             _currentSubState?.Exit();
+            ExitTransitions();
 
             OnExit();
         }
 
-        protected virtual void OnStart() { }
-        protected virtual void OnEnter() { }
-        protected virtual void OnUpdate() { }
-        protected virtual void OnExit() { }
-
         public void LoadSubState(State subState)
         {
             if (_subStates.Count == 0)
-            {
                 _defaultSubState = subState;
-            }
 
             subState._parent = this;
 
@@ -83,17 +79,21 @@ namespace HFSM
 
         public void AddTransition(State from, State to, Condition[] conditions, Operator operation = Operator.Or)
         {
+            Transition transition = new Transition(from, to, conditions, operation);
+
+            AddTransition(transition);
+        }
+
+        public void AddTransition(Transition transition)
+        {
+            State from = transition.From;
+            State to = transition.To;
+
             if (!_subStates.TryGetValue(from.GetType(), out _))
-            {
                 throw new InvalidTransitionException($"State {GetType()} does not have a substate of type {from.GetType()} to transition from.");
-            }
 
             if (!_subStates.TryGetValue(to.GetType(), out _))
-            {
                 throw new InvalidTransitionException($"State {GetType()} does not have a substate of type {to.GetType()} to transition from.");
-            }
-
-            Transition transition = new Transition(from, to, conditions, operation);
 
             if (_transitions.TryGetValue(from.GetType(), out List<Transition> transitions))
             {
@@ -169,5 +169,10 @@ namespace HFSM
             newState.Enter();
             EnterTransitions();
         }
+
+        protected virtual void OnStart() { }
+        protected virtual void OnEnter() { }
+        protected virtual void OnUpdate() { }
+        protected virtual void OnExit() { }
     }
 }
