@@ -27,18 +27,18 @@ namespace Demo1
 
         public override void Start()
         {
-            Root.StartState(this);
-            Root.EnterState();
+            Root.Start(this);
+            Root.Enter();
         }
 
         public override void Update()
         {
-            Root.UpdateState();
+            Root.Update();
         }
 
         public override void Stop()
         {
-            Root.ExitState();
+            Root.Exit();
         }
     }
 }

@@ -10,7 +10,7 @@ public class IsMovingCondition : Condition
         _negate = negate;
     }
 
-    protected override void OnUpdate()
+    public override void OnUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");

@@ -10,7 +10,7 @@ public class IsRunningCondition : Condition
         _negate = negate;
     }
 
-    protected override void OnUpdate()
+    public override void OnUpdate()
     {
         bool isRunning = Input.GetButton("Run");
 
