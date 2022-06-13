@@ -26,9 +26,11 @@ namespace HFSM
 
             OnStart();
 
-            var subStates = _subStates.Values.ToList();
+            _subStates.Values
+                .ToList()
+                .ForEach(state => state.Start(stateMachine));
 
-            subStates.ForEach(state => state.Start(stateMachine));
+            StartTransitions();
         }
 
         public void Enter()
@@ -39,21 +41,23 @@ namespace HFSM
                 _currentSubState = _defaultSubState;
 
             _currentSubState?.Enter();
+
             EnterTransitions();
         }
 
         public void Update()
         {
-            UpdateTransitions();
-
             OnUpdate();
 
             _currentSubState?.Update();
+
+            UpdateTransitions();
         }
 
         public void Exit()
         {
             _currentSubState?.Exit();
+
             ExitTransitions();
 
             OnExit();
@@ -102,6 +106,18 @@ namespace HFSM
             }
 
             _transitions.Add(from.GetType(), new List<Transition> { transition });
+        }
+
+        public void StartTransitions()
+        {
+            List<State> subStates = _subStates.Values.ToList();
+
+            subStates.ForEach(state => {
+                if (!_transitions.TryGetValue(state.GetType(), out List<Transition> transitions))
+                    return;
+
+                transitions.ForEach(transition => transition.Start(_stateMachine));
+            });
         }
 
         public void EnterTransitions()

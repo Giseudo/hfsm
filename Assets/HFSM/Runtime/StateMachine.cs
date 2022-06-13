@@ -30,5 +30,7 @@ namespace HFSM
 
         public void SetVariable<T>() {}
         public void GetVariable<T>() {}
+        public void GetComponent<T>() {}
+        public void TryGetComponent<T>() {}
     }
 }

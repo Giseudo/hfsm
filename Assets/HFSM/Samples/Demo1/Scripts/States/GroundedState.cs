@@ -5,12 +5,15 @@ namespace Demo1
 {
     public class GroundedState : State
     {
-        State _idleState = new IdleState();
-        State _walkState = new WalkState();
-        State _runState = new RunState();
+        private CharacterController _controller;
+        private State _idleState = new IdleState();
+        private State _walkState = new WalkState();
+        private State _runState = new RunState();
 
-        public GroundedState()
+        protected override void OnStart()
         {
+            StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+
             LoadSubState(_idleState);
             LoadSubState(_walkState);
             LoadSubState(_runState);
@@ -68,11 +71,6 @@ namespace Demo1
                 },
                 Operator.And
             );
-        }
-
-        protected override void OnUpdate()
-        {
-            Debug.Log("Grounded - Apply gravity");
         }
     }
 }
