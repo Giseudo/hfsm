@@ -37,7 +37,7 @@ namespace Demo1
                 _jumpState,
                 _fallState,
                 new Condition[] {
-                    new WaitCondition(1f)
+                    new WaitCondition(.5f)
                 }
             );
 

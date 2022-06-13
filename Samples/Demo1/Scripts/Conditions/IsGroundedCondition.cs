@@ -18,7 +18,8 @@ public class IsGroundedCondition : Condition
 
     public override void OnUpdate()
     {
-        bool valid = _controller.isGrounded;
+        Vector3 origin = StateMachine.Context.transform.position + Vector3.up * .05f;
+        bool valid = Physics.Raycast(origin, Vector3.down, .1f, 1 >> LayerMask.NameToLayer("Default"));
 
         if (valid && !_negate || !valid && _negate)
             Trigger();
