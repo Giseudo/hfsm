@@ -1,56 +1,57 @@
+using System;
 using UnityEngine;
 using HFSM;
 
 namespace Demo1
 {
-    public class CubeStateMachine : StateMachine
+    [CreateAssetMenu(menuName = "State Machines/Cube State Machine")]
+    public class CubeStateMachine : StateMachineAsset
     {
-        private State _groundedState = new GroundedState();
-        private State _jumpState = new JumpState();
-        private State _fallState = new FallState();
-
-        public CubeStateMachine(GameObject context) : base (context)
-        { }
-
-        public override void Start()
+        public override State Init(StateMachine context)
         {
-            Root.LoadSubState(_groundedState);
-            Root.LoadSubState(_jumpState);
-            Root.LoadSubState(_fallState);
+            State root = new RootState();
+            State grounded = new GroundedState();
+            State jump = new JumpState();
+            State fall = new FallState();
 
-            Root.AddTransition(
-                _groundedState,
-                _jumpState,
+            root.LoadSubState(grounded);
+            root.LoadSubState(jump);
+            root.LoadSubState(fall);
+
+            root.AddTransition(
+                grounded,
+                jump,
                 new Condition[] {
                     new IsJumpingCondition()
                 }
             );
-            Root.AddTransition(
-                _groundedState,
-                _fallState,
+            root.AddTransition(
+                grounded,
+                fall,
                 new Condition[] {
                     new IsGroundedCondition(true)
                 }
             );
 
-            Root.AddTransition(
-                _jumpState,
-                _fallState,
+            root.AddTransition(
+                jump,
+                fall,
                 new Condition[] {
                     new WaitCondition(.75f)
                 }
             );
 
-            Root.AddTransition(
-                _fallState,
-                _groundedState,
+            root.AddTransition(
+                fall,
+                grounded,
                 new Condition[] {
                     new IsGroundedCondition()
                 }
             );
 
-            Root.Start(this);
-            Root.Enter();
+            root.Start(context);
+
+            return root;
         }
     }
 }
