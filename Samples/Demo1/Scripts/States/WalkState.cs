@@ -8,7 +8,7 @@ public class WalkState : State
 
     protected override void OnStart()
     {
-        StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+        StateMachine.TryGetComponent<CharacterController>(out _controller);
     }
 
     protected override void OnUpdate()

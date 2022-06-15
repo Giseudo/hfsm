@@ -12,7 +12,7 @@ public class ConditionTest
     public void Setup ()
     {
         GameObject context = new GameObject();
-        _stateMachine = new TestStateMachine(context);
+        _stateMachine = new TestStateMachine();
         _condition = Substitute.For<Condition>();
     }
 
@@ -68,8 +68,5 @@ public class ConditionTest
     { }
 
     public class TestStateMachine : StateMachine
-    {
-        public TestStateMachine(GameObject context) : base (context)
-        { }
-    }
+    { }
 }

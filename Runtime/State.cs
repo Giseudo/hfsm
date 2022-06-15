@@ -5,15 +5,20 @@ using UnityEngine;
 
 namespace HFSM
 {
+    [Serializable]
     public abstract class State
     {
         private State _currentSubState;
         private State _defaultSubState;
+        [SerializeField]
         private State _parent;
         private StateMachine _stateMachine;
 
         private Dictionary<Type, State> _subStates = new Dictionary<Type, State>();
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
+
+        [SerializeField]
+        private List<State> _children;
 
         public State CurrentSubState => _currentSubState;
         public StateMachine StateMachine => _stateMachine;

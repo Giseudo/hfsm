@@ -12,7 +12,7 @@ namespace Demo1
 
         protected override void OnStart()
         {
-            StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+            StateMachine.TryGetComponent<CharacterController>(out _controller);
 
             LoadSubState(_idleState);
             LoadSubState(_walkState);

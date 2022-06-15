@@ -1,36 +1,34 @@
+using System;
 using UnityEngine;
 
 namespace HFSM
 {
-    public abstract class StateMachine
+    [Serializable]
+    public class StateMachine : MonoBehaviour
     {
-        private RootState _rootState = new RootState();
-        private GameObject _context;
+        [SerializeField]
+        private StateMachineAsset _asset;
 
-        public GameObject Context => _context;
-        public GameObject Ctx => _context;
-        public RootState Root => _rootState;
+        private State _root;
 
-        public StateMachine(GameObject context) {
-            _context = context;
+        public State Root => _root;
+
+        public void Awake() {
+            _root = _asset?.Init(this);
         }
 
-        public virtual void Start() {
-            Root.Start(this);
-            Root.Enter();
+        public void OnEnable()
+        {
+            _root.Enter();
         }
 
-        public virtual void Update() {
+        public void OnDisable()
+        {
+            _root.Exit();
+        }
+
+        public void Update() {
             Root.Update();
         }
-
-        public virtual void Stop() {
-            Root.Exit();
-        }
-
-        public void SetVariable<T>() {}
-        public void GetVariable<T>() {}
-        public void GetComponent<T>() {}
-        public void TryGetComponent<T>() {}
     }
 }
