@@ -9,6 +9,9 @@ namespace HFSM
         [SerializeField]
         private StateMachineAsset _asset;
 
+        [SerializeField]
+        private StateMachineDebugger _debugger;
+
         private State _root;
 
         public State Root => _root;
