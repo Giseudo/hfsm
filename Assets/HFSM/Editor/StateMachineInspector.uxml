@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <uie:PropertyField binding-path="_asset" label="Asset" />
+    <StateMachineDebuggerView name="StateMachineDebuggerView" />
+</ui:UXML>
