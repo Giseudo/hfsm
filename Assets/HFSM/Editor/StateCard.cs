@@ -12,6 +12,7 @@ public class StateCard : VisualElement
     public new class UxmlTraits : VisualElement.UxmlTraits
     {
         UxmlStringAttributeDescription _title = new UxmlStringAttributeDescription { name = "title", defaultValue = "State Name" };
+        UxmlBoolAttributeDescription _disabled = new UxmlBoolAttributeDescription { name = "disabled", defaultValue = false };
  
         public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
         {
@@ -25,6 +26,7 @@ public class StateCard : VisualElement
             var ate = ve as StateCard;
 
             ate.title = _title.GetValueFromBag(bag, cc);
+            ate.disabled = _disabled.GetValueFromBag(bag, cc);
 
             // FIXME this is not being executed..
             UnityEngine.Debug.Log("OOI");
@@ -45,7 +47,6 @@ public class StateCard : VisualElement
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/HFSM/Editor/StateCard.uss"));
             visualTree.CloneTree(this);
         }
-
     }
 
     public StateCard(string title = "State Name") : this()
@@ -59,4 +60,18 @@ public class StateCard : VisualElement
         get { return this.Q<Label>(null, "state-card__title").text; }
         set { this.Q<Label>(null, "state-card__title").text = value; }
     }
+
+    private bool _disabled;
+
+    public bool disabled {
+        get { return _disabled; }
+        set {
+            _disabled = value;
+
+            if (disabled) AddToClassList(DisabledClass);
+            else RemoveFromClassList(DisabledClass);
+        }
+    }
+
+    static string DisabledClass = "state-card--disabled";
 }

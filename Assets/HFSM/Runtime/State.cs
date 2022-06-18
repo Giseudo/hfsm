@@ -18,10 +18,12 @@ namespace HFSM
         private Dictionary<Type, State> _subStates = new Dictionary<Type, State>();
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
 
+        public State Parent => _parent;
         public State CurrentSubState => _currentSubState;
         public StateMachine StateMachine => _stateMachine;
         public Dictionary<Type, State> SubStates => _subStates;
         public Dictionary<Type, List<Transition>> Transitions => _transitions;
+        public Action<State, State> stateChanged = delegate { };
 
         public void Start(StateMachine stateMachine)
         {
@@ -72,6 +74,7 @@ namespace HFSM
                 _defaultSubState = subState;
 
             subState._parent = this;
+            subState.stateChanged += (from, to) => stateChanged.Invoke(from, to);
 
             try
             {
@@ -183,6 +186,8 @@ namespace HFSM
             ExitTransitions();
 
             var newState = _subStates[state.GetType()];
+
+            stateChanged.Invoke(_currentSubState, newState);
 
             _currentSubState = newState;
             newState.Enter();
