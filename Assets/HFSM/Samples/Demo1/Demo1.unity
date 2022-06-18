@@ -188,8 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _asset: {fileID: 11400000, guid: 1f071de8d0f13a543916a0692de9e438, type: 2}
-  _debugger:
-    name: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

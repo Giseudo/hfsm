@@ -1,4 +1,25 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <uie:PropertyField binding-path="_asset" label="Asset" />
-    <StateMachineDebuggerView name="StateMachineDebuggerView" />
+    <ui:Foldout text="Debugger" value="true">
+        <StateMachineDebugger name="StateMachineDebugger">
+            <StateCard state-name="test">
+                <StateCard />
+                <StateCard />
+                <StateCard />
+                <StateCard>
+                    <StateCard />
+                </StateCard>
+                <StateCard />
+            </StateCard>
+            <StateCard>
+                <StateCard />
+                <StateCard />
+                <StateCard />
+                <StateCard>
+                    <StateCard />
+                </StateCard>
+                <StateCard />
+            </StateCard>
+        </StateMachineDebugger>
+    </ui:Foldout>
 </ui:UXML>
