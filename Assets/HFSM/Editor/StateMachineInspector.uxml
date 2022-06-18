@@ -2,24 +2,6 @@
     <uie:PropertyField binding-path="_asset" label="Asset" />
     <ui:Foldout text="Debugger" value="true">
         <StateMachineDebugger name="StateMachineDebugger">
-            <StateCard state-name="test">
-                <StateCard />
-                <StateCard />
-                <StateCard />
-                <StateCard>
-                    <StateCard />
-                </StateCard>
-                <StateCard />
-            </StateCard>
-            <StateCard>
-                <StateCard />
-                <StateCard />
-                <StateCard />
-                <StateCard>
-                    <StateCard />
-                </StateCard>
-                <StateCard />
-            </StateCard>
         </StateMachineDebugger>
     </ui:Foldout>
 </ui:UXML>

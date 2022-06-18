@@ -17,25 +17,37 @@ public class StateMachineDebugger : VisualElement
 
     public void Start(StateMachine stateMachine)
     {
-        StateCard stateA = new StateCard();
-        stateA.stateName = "State A";
-        Add(stateA);
+        if (stateMachine.Asset == null) return;
 
-        /*
-        PopupWindow stateAI = new PopupWindow();
-        stateAI.text = "State A I";
-        stateA.contentContainer.Add(stateAI);
+        if (!stateMachine.Initialized)
+            stateMachine.Init();
 
-        PopupWindow stateAII = new PopupWindow();
-        stateAII.text = "State A II";
-        stateA.contentContainer.Add(stateAII);
+        foreach (State state in stateMachine.Root.SubStates.Values)
+        {
+            StateCard card = new StateCard(GetTitle(state));
 
-        PopupWindow stateB = new PopupWindow();
-        stateB.text = "State B";
-        foldout.Add(stateB);
-        */
+            AddCards(state, card, this);
+        }
+    }
 
-        // TODO create a state visual element class
-        // TODO populate states
+    public void AddCards(State state, StateCard card, VisualElement parent)
+    {
+        parent.Add(card);
+
+        foreach (State child in state.SubStates.Values)
+        {
+            StateCard childCard = new StateCard(GetTitle(child));
+
+            AddCards(child, childCard, card);
+        }
+    }
+
+    public string GetTitle(State state)
+    {
+        string title = state.GetType().ToString();
+
+        string[] values = title.Split(".");
+
+        return values[values.Length - 1];
     }
 }

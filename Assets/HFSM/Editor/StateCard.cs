@@ -11,8 +11,7 @@ public class StateCard : VisualElement
 
     public new class UxmlTraits : VisualElement.UxmlTraits
     {
-        UxmlStringAttributeDescription m_String = new UxmlStringAttributeDescription { name = "string-attr", defaultValue = "default_value" };
-        UxmlStringAttributeDescription m_StateName = new UxmlStringAttributeDescription { name = "state-name", defaultValue = "NewState" };
+        UxmlStringAttributeDescription _title = new UxmlStringAttributeDescription { name = "title", defaultValue = "State Name" };
  
         public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
         {
@@ -24,10 +23,10 @@ public class StateCard : VisualElement
             base.Init(ve, bag, cc);
 
             var ate = ve as StateCard;
-            // ate.stateName = m_StateName.GetValueFromBag(bag, cc);
 
-            ate.stateName = m_String.GetValueFromBag(bag, cc);
-            ate.Add(new TextField("String") { value = ate.stateName });
+            ate.title = _title.GetValueFromBag(bag, cc);
+
+            // FIXME this is not being executed..
             UnityEngine.Debug.Log("OOI");
         }
     }
@@ -46,9 +45,18 @@ public class StateCard : VisualElement
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/HFSM/Editor/StateCard.uss"));
             visualTree.CloneTree(this);
         }
+
+    }
+
+    public StateCard(string title = "State Name") : this()
+    {
+        this.title = title;
     }
 
     public override VisualElement contentContainer => this.Query<VisualElement>("Content");
 
-    public string stateName { get; set; }
+    public string title {
+        get { return this.Q<Label>(null, "state-card__title").text; }
+        set { this.Q<Label>(null, "state-card__title").text = value; }
+    }
 }
