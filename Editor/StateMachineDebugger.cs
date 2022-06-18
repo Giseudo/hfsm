@@ -1,45 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UIElements;
 using HFSM;
 
 public class StateMachineDebugger : VisualElement
 {
-    public new class UxmlFactory : UxmlFactory<StateMachineDebugger, VisualElement.UxmlTraits>
-    {
-        public override VisualElement Create(IUxmlAttributes bag, CreationContext cc)
-        {
-            VisualElement root = base.Create(bag, cc);
+    private StateMachine _stateMachine;
 
-            return root;
-        }
-    }
+    public new class UxmlFactory : UxmlFactory<StateMachineDebugger, VisualElement.UxmlTraits>
+    { }
 
     public void Start(StateMachine stateMachine)
     {
+        _stateMachine = stateMachine;
+
         if (stateMachine.Asset == null) return;
 
-        if (!stateMachine.Initialized)
+        // TODO add support to empty asset & asset change
+
+        if (!Application.isPlaying)
             stateMachine.Init();
 
+        // add state cards
         foreach (State state in stateMachine.Root.SubStates.Values)
-        {
-            StateCard card = new StateCard(GetTitle(state));
+            AddCards(state, new StateCard(GetTitle(state)), this);
 
-            AddCards(state, card, this);
-        }
+        // every state change, update the history (maybe do this on monobehaviour side? the editor would be limited to just the selected one)
+
     }
 
     public void AddCards(State state, StateCard card, VisualElement parent)
     {
         parent.Add(card);
+        
+        if (Application.isPlaying)
+        {
+            _stateMachine.stateChanged += (from, to) => {
+                State next = to;
+
+                card.disabled = true;
+
+                while (next != null)
+                {
+                    if (next == state) card.disabled = false;
+
+                    next = next.Parent;
+                }
+            };
+
+            card.disabled = true;
+        }
 
         foreach (State child in state.SubStates.Values)
-        {
-            StateCard childCard = new StateCard(GetTitle(child));
-
-            AddCards(child, childCard, card);
-        }
+            AddCards(child, new StateCard(GetTitle(child)), card);
     }
 
     public string GetTitle(State state)

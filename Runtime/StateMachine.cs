@@ -15,6 +15,7 @@ namespace HFSM
         public State Root => _root;
         public StateMachineAsset Asset => _asset;
         public bool Initialized => _initialized;
+        public Action<State, State> stateChanged = delegate { };
 
         public void Awake() {
             Init();
@@ -22,8 +23,10 @@ namespace HFSM
 
         public void Init()
         {
-            _root = _asset?.Init(this);
             _initialized = true;
+
+            _root = _asset?.Init(this);
+            _root.stateChanged += (from, to) => stateChanged.Invoke(from, to);
         }
 
         public void OnEnable()

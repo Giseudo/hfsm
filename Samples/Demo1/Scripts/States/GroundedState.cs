@@ -58,14 +58,14 @@ namespace Demo1
             AddTransition(
                 _runState,
                 _idleState,
-                new Condition[]{
+                new Condition[] {
                     new IsMovingCondition(true)
                 }
             );
             AddTransition(
                 _runState,
                 _walkState,
-                new Condition[]{
+                new Condition[] {
                     new IsMovingCondition(),
                     new IsRunningCondition(true)
                 },

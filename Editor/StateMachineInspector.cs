@@ -11,34 +11,24 @@ namespace HFSM
         public override VisualElement CreateInspectorGUI()
         {
             StateMachine stateMachine = (StateMachine)target;
-            // Create a new VisualElement to be the root of our inspector UI
-            VisualElement myInspector = new VisualElement();
+            VisualElement root = new VisualElement();
 
-            // Load and clone a visual tree from UXML
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/HFSM/Editor/StateMachineInspector.uxml");
+            try
+            {
+                VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.gigi.HFSM/Editor/StateMachineInspector.uxml");
+                visualTree.CloneTree(root);
+            }
+            catch
+            {
+                VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/HFSM/Editor/StateMachineInspector.uxml");
+                visualTree.CloneTree(root);
+            }
 
-            visualTree.CloneTree(myInspector);
-
-            StateMachineDebugger debugger = myInspector.Query<StateMachineDebugger>("StateMachineDebugger");
+            StateMachineDebugger debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
 
             debugger.Start(stateMachine);
 
-            // Return the finished inspector UI
-            return myInspector;
+            return root;
         }
-
-        /*
-        public override VisualElement CreateInspectorGUI()
-        {
-            // Create a new VisualElement to be the root of our inspector UI
-            VisualElement myInspector = new VisualElement();
-
-            // Add a simple label
-            myInspector.Add(new Label("This is a custom inspector"));
-
-            // Return the finished inspector UI
-            return myInspector;
-        }
-        */
     }
 }
