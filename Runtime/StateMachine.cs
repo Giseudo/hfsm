@@ -17,7 +17,8 @@ namespace HFSM
         public bool Initialized => _initialized;
         public Action<State, State> stateChanged = delegate { };
 
-        public void Awake() {
+        public void Awake()
+        {
             Init();
         }
 

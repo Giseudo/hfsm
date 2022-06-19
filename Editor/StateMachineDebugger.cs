@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using HFSM;
@@ -7,6 +8,7 @@ using HFSM;
 public class StateMachineDebugger : VisualElement
 {
     private StateMachine _stateMachine;
+    public Action destroyed = delegate { };
 
     public new class UxmlFactory : UxmlFactory<StateMachineDebugger, VisualElement.UxmlTraits>
     { }
@@ -22,22 +24,34 @@ public class StateMachineDebugger : VisualElement
         if (!Application.isPlaying)
             stateMachine.Init();
 
-        // add state cards
         foreach (State state in stateMachine.Root.SubStates.Values)
-            AddCards(state, new StateCard(GetTitle(state)), this);
-
-        // every state change, update the history (maybe do this on monobehaviour side? the editor would be limited to just the selected one)
-
+            AddCards(state, new StateCard(FormatTitle(state)), this);
     }
 
+    public void Destroy() => destroyed.Invoke();
+
     public void AddCards(State state, StateCard card, VisualElement parent)
-    {
-        parent.Add(card);
-        
+    { 
         if (Application.isPlaying)
         {
-            _stateMachine.stateChanged += (from, to) => {
+            // Set initial active cards on play mode
+            card.disabled = true;
+
+            State next = _stateMachine.Root.CurrentSubState;
+
+            while(next != null)
+            {
+                if (next == state) card.disabled = false;
+
+                next = next.CurrentSubState;
+            }
+
+            Action<State, State> onStateChange = (from, to) => {
+                // TODO we should keep track & update the history every state change
+                // maybe do this on monobehaviour side? the editor would be limited to just the selected one
                 State next = to;
+
+                UnityEngine.Debug.Log("How many times?");
 
                 card.disabled = true;
 
@@ -49,14 +63,19 @@ public class StateMachineDebugger : VisualElement
                 }
             };
 
-            card.disabled = true;
+            _stateMachine.stateChanged += onStateChange;
+            destroyed += () => _stateMachine.stateChanged -= onStateChange;
         }
 
+        // Add state to parent
+        parent.Add(card);
+
+        // Add children states
         foreach (State child in state.SubStates.Values)
-            AddCards(child, new StateCard(GetTitle(child)), card);
+            AddCards(child, new StateCard(FormatTitle(child)), card);
     }
 
-    public string GetTitle(State state)
+    public string FormatTitle(State state)
     {
         string title = state.GetType().ToString();
 

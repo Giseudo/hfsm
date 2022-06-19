@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
@@ -6,6 +7,47 @@ using HFSM;
 
 public class StateCard : VisualElement
 {
+    static string DisabledClass = "state-card--disabled";
+
+    public override VisualElement contentContainer => this.Query<VisualElement>("Content");
+
+    public string title {
+        get { return this.Q<Label>(null, "state-card__title").text; }
+        set { this.Q<Label>(null, "state-card__title").text = value; }
+    }
+    public bool disabled {
+        get { return _disabled; }
+        set {
+            _disabled = value;
+
+            if (disabled) AddToClassList(DisabledClass);
+            else RemoveFromClassList(DisabledClass);
+        }
+    }
+
+    private bool _disabled;
+
+    public StateCard()
+    {
+        try
+        {
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.gigi.HFSM/Editor/StateCard.uxml");
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.gigi.HFSM/Editor/StateCard.uss"));
+            visualTree.CloneTree(this);
+        }
+        catch
+        {
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/HFSM/Editor/StateCard.uxml");
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/HFSM/Editor/StateCard.uss"));
+            visualTree.CloneTree(this);
+        }
+    }
+
+    public StateCard(string title = "State Name") : this()
+    {
+        this.title = title;
+    }
+
     public new class UxmlFactory : UxmlFactory<StateCard, VisualElement.UxmlTraits>
     { }
 
@@ -32,46 +74,4 @@ public class StateCard : VisualElement
             UnityEngine.Debug.Log("OOI");
         }
     }
-
-    public StateCard()
-    {
-        try
-        {
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.gigi.HFSM/Editor/StateCard.uxml");
-            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.gigi.HFSM/Editor/StateCard.uss"));
-            visualTree.CloneTree(this);
-        }
-        catch
-        {
-            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/HFSM/Editor/StateCard.uxml");
-            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/HFSM/Editor/StateCard.uss"));
-            visualTree.CloneTree(this);
-        }
-    }
-
-    public StateCard(string title = "State Name") : this()
-    {
-        this.title = title;
-    }
-
-    public override VisualElement contentContainer => this.Query<VisualElement>("Content");
-
-    public string title {
-        get { return this.Q<Label>(null, "state-card__title").text; }
-        set { this.Q<Label>(null, "state-card__title").text = value; }
-    }
-
-    private bool _disabled;
-
-    public bool disabled {
-        get { return _disabled; }
-        set {
-            _disabled = value;
-
-            if (disabled) AddToClassList(DisabledClass);
-            else RemoveFromClassList(DisabledClass);
-        }
-    }
-
-    static string DisabledClass = "state-card--disabled";
 }
