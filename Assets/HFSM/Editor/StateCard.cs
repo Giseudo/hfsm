@@ -15,6 +15,7 @@ public class StateCard : VisualElement
         get { return this.Q<Label>(null, "state-card__title").text; }
         set { this.Q<Label>(null, "state-card__title").text = value; }
     }
+
     public bool disabled {
         get { return _disabled; }
         set {
@@ -48,7 +49,7 @@ public class StateCard : VisualElement
         this.title = title;
     }
 
-    public new class UxmlFactory : UxmlFactory<StateCard, VisualElement.UxmlTraits>
+    public new class UxmlFactory : UxmlFactory<StateCard, UxmlTraits>
     { }
 
     public new class UxmlTraits : VisualElement.UxmlTraits
@@ -69,9 +70,6 @@ public class StateCard : VisualElement
 
             ate.title = _title.GetValueFromBag(bag, cc);
             ate.disabled = _disabled.GetValueFromBag(bag, cc);
-
-            // FIXME this is not being executed..
-            UnityEngine.Debug.Log("OOI");
         }
     }
 }
