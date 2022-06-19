@@ -8,7 +8,6 @@ namespace HFSM
     [Serializable]
     public class State
     {
-        public string name = "oi";
         private State _currentSubState;
         private State _defaultSubState;
         [SerializeField]
@@ -45,7 +44,8 @@ namespace HFSM
             if (_currentSubState == null && _defaultSubState != null)
                 _currentSubState = _defaultSubState;
 
-            _currentSubState?.Enter();
+            if (_currentSubState != null)
+                ChangeSubState(_currentSubState);
 
             EnterTransitions();
         }
@@ -62,6 +62,7 @@ namespace HFSM
         public void Exit()
         {
             _currentSubState?.Exit();
+            _currentSubState = null;
 
             ExitTransitions();
 

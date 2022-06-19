@@ -8,6 +8,8 @@ namespace HFSM
     [CustomEditor(typeof(StateMachine))]
     public class StateMachineInspector : Editor
     {
+        StateMachineDebugger _debugger;
+
         public override VisualElement CreateInspectorGUI()
         {
             StateMachine stateMachine = (StateMachine)target;
@@ -24,11 +26,16 @@ namespace HFSM
                 visualTree.CloneTree(root);
             }
 
-            StateMachineDebugger debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
+            _debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
 
-            debugger.Start(stateMachine);
+            _debugger.Start(stateMachine);
 
             return root;
+        }
+
+        public void OnDestroy()
+        {
+            _debugger?.Destroy();
         }
     }
 }
