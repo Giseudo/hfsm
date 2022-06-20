@@ -8,40 +8,58 @@ namespace HFSM
     {
         [SerializeField]
         private StateMachineAsset _asset;
-
+        private StateMachineAsset _previousAsset;
         private State _root;
-        private bool _initialized;
+
+        public Action<State, State> stateChanged = delegate { };
+        public Action<StateMachineAsset> assetChanged = delegate { };
 
         public State Root => _root;
         public StateMachineAsset Asset => _asset;
-        public bool Initialized => _initialized;
-        public Action<State, State> stateChanged = delegate { };
 
-        public void Awake()
+        public void Awake() => Init();
+
+        public void Start()
         {
+            _root?.Enter();
+
+            if (_root != null)
+                _root.stateChanged += OnStateChange;
+        }
+
+        public void Restart()
+        {
+            if (_root != null)
+                _root.stateChanged -= OnStateChange;
+
+            _root?.Exit();
+
             Init();
+            Start();
         }
 
-        public void Init()
+        public void Init() => _root = _asset?.Init(this);
+
+        public void OnEnable() => _root?.Enter();
+
+        public void OnDisable() => _root?.Exit();
+
+        public void Update() => _root?.Update();
+
+        public void SetAsset(StateMachineAsset value)
         {
-            _initialized = true;
+            if (_previousAsset == value) return;
 
-            _root = _asset?.Init(this);
-            _root.stateChanged += (from, to) => stateChanged.Invoke(from, to);
+            _previousAsset = _asset;
+            _asset = value;
+
+            Restart();
+
+            assetChanged.Invoke(value);
         }
 
-        public void OnEnable()
-        {
-            _root.Enter();
-        }
+        public void OnStateChange(State from, State to) => stateChanged.Invoke(from, to);
 
-        public void OnDisable()
-        {
-            _root.Exit();
-        }
-
-        public void Update() {
-            _root.Update();
-        }
+        public void OnValidate() => SetAsset(_asset);
     }
 }

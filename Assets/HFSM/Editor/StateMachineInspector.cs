@@ -9,6 +9,7 @@ namespace HFSM
     public class StateMachineInspector : Editor
     {
         StateMachineDebugger _debugger;
+        StateMachine _stateMachine;
 
         public override VisualElement CreateInspectorGUI()
         {
@@ -26,16 +27,26 @@ namespace HFSM
                 visualTree.CloneTree(root);
             }
 
-            _debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
+            _stateMachine = stateMachine;
+            _stateMachine.assetChanged += OnAssetChange;
 
-            _debugger.Start(stateMachine);
+            _debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
+            _debugger?.Start(stateMachine);
 
             return root;
         }
 
         public void OnDestroy()
         {
+            _stateMachine.assetChanged -= OnAssetChange;
+
             _debugger?.Destroy();
+        }
+
+        public void OnAssetChange(StateMachineAsset asset)
+        {
+            _debugger?.Clear();
+            _debugger?.Start(_stateMachine);
         }
     }
 }
