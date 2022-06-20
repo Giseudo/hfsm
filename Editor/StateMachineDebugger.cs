@@ -51,8 +51,6 @@ public class StateMachineDebugger : VisualElement
                 // maybe do this on monobehaviour side? the editor would be limited to just the selected one
                 State next = to;
 
-                UnityEngine.Debug.Log("How many times?");
-
                 card.disabled = true;
 
                 while (next != null)
