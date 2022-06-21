@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor;
 using HFSM;
 
 public class StateMachineDebugger : VisualElement
@@ -10,8 +11,26 @@ public class StateMachineDebugger : VisualElement
     private StateMachine _stateMachine;
     public Action destroyed = delegate { };
 
+    public override VisualElement contentContainer => this.Query<VisualElement>("Content");
+
     public new class UxmlFactory : UxmlFactory<StateMachineDebugger, VisualElement.UxmlTraits>
     { }
+
+    public StateMachineDebugger()
+    {
+        try
+        {
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.gigi.HFSM/Editor/StateMachineDebugger.uxml");
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Packages/com.gigi.HFSM/Editor/StateMachineDebugger.uss"));
+            visualTree.CloneTree(this);
+        }
+        catch
+        {
+            VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/HFSM/Editor/StateMachineDebugger.uxml");
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/HFSM/Editor/StateMachineDebugger.uss"));
+            visualTree.CloneTree(this);
+        }
+    }
 
     public void Start(StateMachine stateMachine)
     {
