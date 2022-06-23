@@ -11,51 +11,8 @@
         <ui:Button text="Last" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
     </ui:VisualElement>
     <ui:VisualElement name="Details" style="flex-direction: row; justify-content: space-between; margin-bottom: 10px;">
-        <ui:VisualElement style="background-color: rgba(121, 121, 121, 0.3); border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; width: 49%; opacity: 0.5;">
-            <ui:Label text="PREVIOUS STATE" display-tooltip-when-elided="true" style="font-size: 10px; -unity-font-style: bold; word-spacing: 20px;" />
-            <ui:VisualElement style="flex-direction: row; margin-top: 5px; justify-content: space-between; align-items: flex-end;">
-                <ui:Label text="Walk" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0;" />
-                <ui:Label text="00:15s" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 10px;" />
-            </ui:VisualElement>
-            <ui:VisualElement style="background-color: rgba(121, 121, 121, 0.3); border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-top: 5px;">
-                <ui:Label text="TRANSITIONS" display-tooltip-when-elided="true" style="font-size: 10px; -unity-font-style: bold; word-spacing: 20px;" />
-                <ui:VisualElement style="flex-direction: row; margin-top: 5px; flex-wrap: wrap;">
-                    <ui:Label text="Walk" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:Label text="Run" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:Label text="Jump" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:Label text="Fall" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:VisualElement display-tooltip-when-elided="true" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;">
-                        <ui:Label text="Fall" style="-unity-font-style: bold; font-size: 11px;" />
-                    </ui:VisualElement>
-                    <ui:VisualElement display-tooltip-when-elided="true" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;">
-                        <ui:Label text="Falling" style="-unity-font-style: bold; font-size: 11px;" />
-                    </ui:VisualElement>
-                    <ui:Label text="Fall" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                </ui:VisualElement>
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement style="background-color: rgba(121, 121, 121, 0.3); border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; width: 49%;">
-            <ui:Label text="CURRENT STATE" display-tooltip-when-elided="true" style="font-size: 10px; -unity-font-style: bold; word-spacing: 20px;" />
-            <ui:VisualElement style="flex-direction: row; margin-top: 5px; justify-content: space-between; align-items: flex-end;">
-                <ui:Label text="Walk" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 0; margin-bottom: 0; margin-left: 0; margin-top: 0;" />
-                <ui:Label text="00:15s" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 10px;" />
-            </ui:VisualElement>
-            <ui:VisualElement style="background-color: rgba(121, 121, 121, 0.3); border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-top: 5px;">
-                <ui:Label text="TRANSITIONS" display-tooltip-when-elided="true" style="font-size: 10px; -unity-font-style: bold; word-spacing: 20px;" />
-                <ui:VisualElement style="flex-direction: row; margin-top: 5px; flex-wrap: wrap;">
-                    <ui:Label text="Walk" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:Label text="Run" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:Label text="Jump" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:Label text="Fall" display-tooltip-when-elided="true" style="-unity-font-style: bold; border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); font-size: 11px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;" />
-                    <ui:VisualElement display-tooltip-when-elided="true" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;">
-                        <ui:Label text="Fall" style="-unity-font-style: bold; font-size: 11px;" />
-                    </ui:VisualElement>
-                    <ui:VisualElement display-tooltip-when-elided="true" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;">
-                        <ui:Label text="Falling" style="-unity-font-style: bold; font-size: 11px;" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-            </ui:VisualElement>
-        </ui:VisualElement>
+        <StateInfo title="PREVIOUS STATE" disabled="true" style="width: 49%;" />
+        <StateInfo transitions="State A, State B" style="width: 49%;" />
     </ui:VisualElement>
     <StateCard title="Root" name="Preview">
         <ui:VisualElement name="Content" />
