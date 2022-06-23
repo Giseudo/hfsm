@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement display-tooltip-when-elided="true" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(0, 0, 0, 0.64); padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;">
+        <ui:Label class="state-badge__label" text="State Name" style="-unity-font-style: bold; font-size: 11px;" />
+    </ui:VisualElement>
+</ui:UXML>
