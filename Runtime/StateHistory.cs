@@ -11,9 +11,10 @@ namespace HFSM
         private int _activeIndex = 0;
         private bool _autoSelectLast = true;
 
+        public Action<LinkedListNode<State>> stateSelected = delegate { };
+
         public LinkedList<State> List => _list;
         public int ActiveIndex => _activeIndex;
-        public Action selectedStateChanged = delegate { };
         public State First => _list.First.Value;
         public State Last => _list.Last.Value;
         public State Next => _currentState.Next?.Value;
@@ -35,6 +36,8 @@ namespace HFSM
         public void Clear()
         {
             _list = new LinkedList<State>();
+            _activeIndex = 0;
+            _currentState = null;
         }
 
         public State SelectIndex(int index)
@@ -113,12 +116,14 @@ namespace HFSM
 
             if (!value) return;
 
-            // TODO set activeIndex to last and trigger event emission
+            SelectLast();
         }
 
         private void Select(LinkedListNode<State> state)
         {
             _currentState = state;
+
+            stateSelected.Invoke(state);
         }
 
         private void OnStateChange(State from, State to)
