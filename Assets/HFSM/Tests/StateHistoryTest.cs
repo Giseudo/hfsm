@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using NUnit.Framework;
 using HFSM;
 using System.Linq;
+using System.Collections.Generic;
 using NSubstitute;
 
 public class StateHistoryTest
@@ -72,32 +74,94 @@ public class StateHistoryTest
         Assert.AreEqual(state, _stateMachine.History.Current);
         Assert.AreEqual(1, _stateMachine.History.ActiveIndex);
 
-        // TODO check errors too
+        Assert.Throws<IndexOutOfRangeException>(() => _stateMachine.History.SelectIndex(10));
     }
 
     [Test]
     public void ShouldSelectLastState()
-    { }
+    {
+        _stateMachine.Update();
+        _stateMachine.History.SelectFirst();
+
+        State last = _stateMachine.History.Last;
+
+        _stateMachine.History.SelectLast();
+
+        Assert.AreEqual(last, _stateMachine.History.Current);
+    }
 
     [Test]
     public void ShouldSelectFirstState()
-    { }
+    {
+        _stateMachine.Update();
+
+        State first = _stateMachine.History.First;
+
+        _stateMachine.History.SelectFirst();
+
+        Assert.AreEqual(first, _stateMachine.History.Current);
+    }
 
     [Test]
     public void ShouldAutoSelectLast()
-    { }
+    {
+        _stateMachine.Update();
+        _stateMachine.Update();
+        _stateMachine.Update();
+        _stateMachine.Update();
+
+        State last = _stateMachine.History.Last;
+
+        Assert.AreEqual(last, _stateMachine.History.Current);
+    }
 
     [Test]
     public void ShouldNotAutoSelectLast()
-    { }
+    {
+        _stateMachine.Update();
+
+        State current = _stateMachine.History.Current;
+
+        _stateMachine.History.AutoSelectLast(false);
+
+        _stateMachine.Update();
+        _stateMachine.Update();
+        _stateMachine.Update();
+
+        Assert.AreEqual(current, _stateMachine.History.Current);
+    }
 
     [Test]
     public void ShouldClear()
-    { }
+    {
+        _stateMachine.Update();
+        _stateMachine.Update();
+        _stateMachine.Update();
+
+        Assert.Greater(_stateMachine.History.List.Count, 1);
+
+        _stateMachine.History.Clear();
+
+        Assert.Less(_stateMachine.History.List.Count, 1);
+        Assert.AreEqual(_stateMachine.History.ActiveIndex, 0);
+    }
 
     [Test]
     public void ShouldDestroy()
-    { }
+    {
+        bool triggeredStateChange = false;
+
+        Action<LinkedListNode<State>> OnStateSelect = (node) => triggeredStateChange = true;
+
+        _stateMachine.History.stateSelected += OnStateSelect;
+
+        _stateMachine.History.Destroy();
+
+        _stateMachine.Update();
+        _stateMachine.Update();
+
+        Assert.False(triggeredStateChange);
+    }
 
     [TearDown]
     public void TearDown()
