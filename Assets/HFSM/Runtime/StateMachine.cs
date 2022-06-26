@@ -10,21 +10,26 @@ namespace HFSM
         private StateMachineAsset _asset;
         private StateMachineAsset _previousAsset;
         private State _root;
+        private StateHistory _history;
 
         public Action<State, State> stateChanged = delegate { };
         public Action<StateMachineAsset> assetChanged = delegate { };
 
         public State Root => _root;
         public StateMachineAsset Asset => _asset;
+        public StateHistory History => _history;
 
         public void Awake() => Init();
 
         public void Start()
         {
-            _root?.Enter();
+            _history = new StateHistory();
+            _history.Start(this);
 
             if (_root != null)
                 _root.stateChanged += OnStateChange;
+
+            _root?.Enter();
         }
 
         public void Restart()
