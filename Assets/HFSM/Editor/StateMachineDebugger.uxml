@@ -1,19 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Assets/HFSM/Editor/StateMachineDebugger.uss?fileID=7433441132597879392&amp;guid=b299daf9a030f794cb663e5cbe15e629&amp;type=3#StateMachineDebugger" />
-    <ui:VisualElement name="History" style="flex-direction: row; align-items: center; margin-bottom: 10px; justify-content: space-between;">
-        <ui:Button text="First" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
-        <ui:Button text="Previous" display-tooltip-when-elided="true" style="width: 75px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
-        <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1; flex-shrink: 0; justify-content: center;">
-            <uie:IntegerField value="0" style="margin-left: 3px; margin-right: 3px; margin-top: 0; margin-bottom: 0;" />
-            <ui:Label text="/ 42" display-tooltip-when-elided="true" style="margin-left: 0; margin-right: 3px;" />
-        </ui:VisualElement>
-        <ui:Button text="Next" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 5px; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
-        <ui:Button text="Last" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
-    </ui:VisualElement>
-    <ui:VisualElement name="Details" style="flex-direction: row; justify-content: space-between; margin-bottom: 10px;">
-        <StateInfo title="PREVIOUS STATE" disabled="true" style="width: 49%;" />
-        <StateInfo transitions="State A, State B" style="width: 49%;" />
-    </ui:VisualElement>
+    <StateMachineHistory name="History" />
     <StateCard title="Root" name="Preview">
         <ui:VisualElement name="Content" />
     </StateCard>

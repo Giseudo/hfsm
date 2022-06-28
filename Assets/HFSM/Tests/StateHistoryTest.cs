@@ -113,6 +113,7 @@ public class StateHistoryTest
         State last = _stateMachine.History.Last;
 
         Assert.AreEqual(last, _stateMachine.History.Current);
+        Assert.AreEqual(_stateMachine.History.ActiveIndex, 4);
     }
 
     [Test]
@@ -122,6 +123,8 @@ public class StateHistoryTest
 
         State current = _stateMachine.History.Current;
 
+        Assert.AreEqual(_stateMachine.History.ActiveIndex, 1);
+
         _stateMachine.History.AutoSelectLast(false);
 
         _stateMachine.Update();
@@ -129,6 +132,7 @@ public class StateHistoryTest
         _stateMachine.Update();
 
         Assert.AreEqual(current, _stateMachine.History.Current);
+        Assert.AreEqual(_stateMachine.History.ActiveIndex, 1);
     }
 
     [Test]
@@ -139,6 +143,7 @@ public class StateHistoryTest
         _stateMachine.Update();
 
         Assert.Greater(_stateMachine.History.List.Count, 1);
+        Assert.Greater(_stateMachine.History.ActiveIndex, 0);
 
         _stateMachine.History.Clear();
 
