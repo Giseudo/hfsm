@@ -9,6 +9,7 @@ using HFSM;
 public class StateMachineDebugger : VisualElement
 {
     private StateMachine _stateMachine;
+    private StateMachineHistory _history;
     public Action destroyed = delegate { };
 
     public override VisualElement contentContainer => this.Query<VisualElement>("Content");
@@ -30,11 +31,14 @@ public class StateMachineDebugger : VisualElement
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/HFSM/Editor/StateMachineDebugger.uss"));
             visualTree.CloneTree(this);
         }
+
+        _history = this.Q<StateMachineHistory>("History");
     }
 
     public void Start(StateMachine stateMachine)
     {
         _stateMachine = stateMachine;
+        _history.Start(stateMachine);
 
         if (stateMachine.Asset == null) return;
 

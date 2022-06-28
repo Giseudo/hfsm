@@ -11,6 +11,12 @@ namespace HFSM
         private int _activeIndex = 0;
         private bool _autoSelectLast = true;
 
+        // TODO tests
+        // TODO populate
+        // TODO clear
+        // TODO update current time
+        private Dictionary<int, string> _timers = new Dictionary<int, string>();
+
         public Action<LinkedListNode<State>> stateSelected = delegate { };
 
         public LinkedList<State> List => _list;
@@ -131,7 +137,10 @@ namespace HFSM
             LinkedListNode<State> node = _list.AddLast(to);
 
             if (_autoSelectLast)
+            {
+                _activeIndex = _list.Count - 1;
                 Select(node);
+            }
         }
     }
 }
