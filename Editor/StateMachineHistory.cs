@@ -18,8 +18,14 @@ public class StateMachineHistory : VisualElement
         set { this.Q<Label>("TotalCount").text = $"/ {value}"; }
     }
 
+    public Button FirstButton => this.Q<Button>("FirstButton");
+    public Button PreviousButton => this.Q<Button>("PreviousButton");
+    public Button NextButton => this.Q<Button>("NextButton");
+    public Button LastButton => this.Q<Button>("LastButton");
     public StateInfo PreviousInfo => this.Q<StateInfo>("PreviousInfo");
     public StateInfo CurrentInfo => this.Q<StateInfo>("CurrentInfo");
+
+    public Action<LinkedListNode<State>> stateSelected = delegate { };
 
     public new class UxmlFactory : UxmlFactory<StateMachineHistory, VisualElement.UxmlTraits>
     { }
@@ -46,16 +52,27 @@ public class StateMachineHistory : VisualElement
 
         if (stateMachine.History == null) return;
 
+        FirstButton.clicked += () => OnStateSelect(_stateMachine.History.SelectFirst());
+        PreviousButton.clicked += () => OnStateSelect(_stateMachine.History.SelectPrevious());
+        NextButton.clicked += () => OnStateSelect(_stateMachine.History.SelectNext());
+        LastButton.clicked += () => OnStateSelect(_stateMachine.History.SelectLast());
+
         _stateMachine.History.stateSelected += OnStateSelect;
+    }
+
+    public void Destroy()
+    {
+        // TODO unsubscribe from this hell?
     }
 
     public void OnStateSelect(LinkedListNode<State> node)
     {
-        PreviousInfo.state = node.Previous.Value.GetType().ToString();
+        PreviousInfo.state = node.Previous?.Value?.GetType().ToString();
         CurrentInfo.state = node.Value.GetType().ToString();
 
         activeIndex = _stateMachine.History.ActiveIndex.ToString();
-        Debug.Log(_stateMachine.History.ActiveIndex);
         totalCount = _stateMachine.History.List.Count.ToString();
+
+        stateSelected.Invoke(node);
     }
 }
