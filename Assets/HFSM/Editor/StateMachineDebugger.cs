@@ -69,10 +69,8 @@ public class StateMachineDebugger : VisualElement
                 next = next.CurrentSubState;
             }
 
-            Action<State, State> onStateChange = (from, to) => {
-                // TODO we should keep track & update the history every state change
-                // maybe do this on monobehaviour side? the editor would be limited to just the selected one
-                State next = to;
+            Action<LinkedListNode<State>> onStateChange = (node) => {
+                State next = node.Value;
 
                 card.disabled = true;
 
@@ -84,8 +82,8 @@ public class StateMachineDebugger : VisualElement
                 }
             };
 
-            _stateMachine.stateChanged += onStateChange;
-            destroyed += () => _stateMachine.stateChanged -= onStateChange;
+            _history.stateSelected += onStateChange;
+            destroyed += () => _history.stateSelected -= onStateChange;
         }
 
         // Add state to parent

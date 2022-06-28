@@ -23,6 +23,7 @@ namespace HFSM
         public Dictionary<Type, State> SubStates => _subStates;
         public Dictionary<Type, List<Transition>> Transitions => _transitions;
         public Action<State, State> stateChanged = delegate { };
+        public bool IsLeaf => _subStates.Count == 0;
 
         public void Start(StateMachine stateMachine)
         {
@@ -188,7 +189,8 @@ namespace HFSM
 
             var newState = _subStates[state.GetType()];
 
-            stateChanged.Invoke(_currentSubState, newState);
+            if (newState.IsLeaf)
+                stateChanged.Invoke(_currentSubState, newState);
 
             _currentSubState = newState;
             newState.Enter();

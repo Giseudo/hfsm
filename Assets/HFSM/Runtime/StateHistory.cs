@@ -68,52 +68,44 @@ namespace HFSM
             return node.Value;
         }
 
-        public State SelectPrevious()
+        public LinkedListNode<State> SelectPrevious()
         {
-            State previous = this.Previous;
-
-            if (previous == null) return Current;
+            if (_currentState.Previous == null) return _currentState;
 
             _activeIndex--;
 
             Select(_currentState.Previous);
 
-            return previous;
+            return _currentState.Previous;
         }
 
-        public State SelectNext()
+        public LinkedListNode<State> SelectNext()
         {
-            State next = this.Next;
-
-            if (next == null) return Current;
+            if (_currentState.Next == null) return _currentState;
 
             _activeIndex++;
 
             Select(_currentState.Next);
 
-            return next;
+            return _currentState.Next;
         }
 
-        public State SelectLast()
+        public LinkedListNode<State> SelectLast()
         {
-            State last = this.Last;
-
             _activeIndex = _list.Count - 1;
 
             Select(_list.Last);
 
-            return last;
+            return _list.Last;
         }
 
-        public State SelectFirst()
+        public LinkedListNode<State> SelectFirst()
         {
-            State first = this.First;
-
             _activeIndex = 0;
 
             Select(_list.First);
 
-            return first;
+            return _list.First;
         }
 
         public void AutoSelectLast(bool value)
@@ -125,7 +117,7 @@ namespace HFSM
             SelectLast();
         }
 
-        private void Select(LinkedListNode<State> state)
+        public void Select(LinkedListNode<State> state)
         {
             _currentState = state;
 
