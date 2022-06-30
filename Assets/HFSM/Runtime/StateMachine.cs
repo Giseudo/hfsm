@@ -10,7 +10,7 @@ namespace HFSM
         private StateMachineAsset _asset;
         private StateMachineAsset _previousAsset;
         private State _root;
-        private StateHistory _history;
+        private StateHistory _history = new StateHistory();
 
         public Action<State, State> stateChanged = delegate { };
         public Action<StateMachineAsset> assetChanged = delegate { };
@@ -23,24 +23,17 @@ namespace HFSM
 
         public void Start()
         {
-            _history = new StateHistory();
             _history.Start(this);
-
-            if (_root != null)
-                _root.stateChanged += OnStateChange;
-
-            _root?.Enter();
         }
 
         public void Restart()
         {
-            if (_root != null)
-                _root.stateChanged -= OnStateChange;
-
             _root?.Exit();
 
             Init();
             Start();
+
+            _root?.Enter();
         }
 
         public void Init() => _root = _asset?.Init(this);
@@ -62,8 +55,6 @@ namespace HFSM
 
             assetChanged.Invoke(value);
         }
-
-        public void OnStateChange(State from, State to) => stateChanged.Invoke(from, to);
 
         public void OnValidate() => SetAsset(_asset);
     }

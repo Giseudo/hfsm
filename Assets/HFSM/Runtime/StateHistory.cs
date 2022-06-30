@@ -21,22 +21,22 @@ namespace HFSM
 
         public LinkedList<State> List => _list;
         public int ActiveIndex => _activeIndex;
-        public State First => _list.First.Value;
-        public State Last => _list.Last.Value;
-        public State Next => _currentState.Next?.Value;
-        public State Previous => _currentState.Previous?.Value;
-        public State Current => _currentState.Value;
+        public LinkedListNode<State> First => _list.First;
+        public LinkedListNode<State> Last => _list.Last;
+        public LinkedListNode<State> Next => _currentState.Next;
+        public LinkedListNode<State> Previous => _currentState.Previous;
+        public LinkedListNode<State> Current => _currentState;
 
         public void Start(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
 
-            _stateMachine.stateChanged += OnStateChange;
+            _stateMachine.Root.stateChanged += OnStateChange;
         }
 
         public void Destroy()
         {
-            _stateMachine.stateChanged -= OnStateChange;
+            _stateMachine.Root.stateChanged -= OnStateChange;
         }
 
         public void Clear()
@@ -68,44 +68,36 @@ namespace HFSM
             return node.Value;
         }
 
-        public LinkedListNode<State> SelectPrevious()
+        public void SelectPrevious()
         {
-            if (_currentState.Previous == null) return _currentState;
+            if (_currentState.Previous == null) return;
 
             _activeIndex--;
 
             Select(_currentState.Previous);
-
-            return _currentState.Previous;
         }
 
-        public LinkedListNode<State> SelectNext()
+        public void SelectNext()
         {
-            if (_currentState.Next == null) return _currentState;
+            if (_currentState.Next == null) return;
 
             _activeIndex++;
 
             Select(_currentState.Next);
-
-            return _currentState.Next;
         }
 
-        public LinkedListNode<State> SelectLast()
+        public void SelectLast()
         {
             _activeIndex = _list.Count - 1;
 
             Select(_list.Last);
-
-            return _list.Last;
         }
 
-        public LinkedListNode<State> SelectFirst()
+        public void SelectFirst()
         {
             _activeIndex = 0;
 
             Select(_list.First);
-
-            return _list.First;
         }
 
         public void AutoSelectLast(bool value)
@@ -126,13 +118,13 @@ namespace HFSM
 
         private void OnStateChange(State from, State to)
         {
-            LinkedListNode<State> node = _list.AddLast(to);
+            if (to == null) return;
 
-            if (_autoSelectLast)
-            {
-                _activeIndex = _list.Count - 1;
-                Select(node);
-            }
+            _list.AddLast(to);
+
+            if (!_autoSelectLast) return;
+
+            SelectLast();
         }
     }
 }

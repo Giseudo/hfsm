@@ -52,17 +52,24 @@ public class StateMachineHistory : VisualElement
 
         if (stateMachine.History == null) return;
 
-        FirstButton.clicked += () => OnStateSelect(_stateMachine.History.SelectFirst());
-        PreviousButton.clicked += () => OnStateSelect(_stateMachine.History.SelectPrevious());
-        NextButton.clicked += () => OnStateSelect(_stateMachine.History.SelectNext());
-        LastButton.clicked += () => OnStateSelect(_stateMachine.History.SelectLast());
+        FirstButton.clicked += _stateMachine.History.SelectFirst;
+        PreviousButton.clicked += _stateMachine.History.SelectPrevious;
+        NextButton.clicked += _stateMachine.History.SelectNext;
+        LastButton.clicked += _stateMachine.History.SelectLast;
 
         _stateMachine.History.stateSelected += OnStateSelect;
+
+        OnStateSelect(_stateMachine.History.Current);
     }
 
     public void Destroy()
     {
-        // TODO unsubscribe from this hell?
+        FirstButton.clicked -= _stateMachine.History.SelectFirst;
+        PreviousButton.clicked -= _stateMachine.History.SelectPrevious;
+        NextButton.clicked -= _stateMachine.History.SelectNext;
+        LastButton.clicked -= _stateMachine.History.SelectLast;
+
+        _stateMachine.History.stateSelected -= OnStateSelect;
     }
 
     public void OnStateSelect(LinkedListNode<State> node)
@@ -70,8 +77,10 @@ public class StateMachineHistory : VisualElement
         PreviousInfo.state = node.Previous?.Value?.GetType().ToString();
         CurrentInfo.state = node.Value.GetType().ToString();
 
+        PreviousInfo.style.display = node.Previous == null ? DisplayStyle.None : DisplayStyle.Flex;
+
         activeIndex = _stateMachine.History.ActiveIndex.ToString();
-        totalCount = _stateMachine.History.List.Count.ToString();
+        totalCount = (_stateMachine.History.List.Count - 1).ToString();
 
         stateSelected.Invoke(node);
     }

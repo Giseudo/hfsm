@@ -40,7 +40,7 @@ public class StateHistoryTest
         _stateMachine.Update();
         _stateMachine.Update();
 
-        State previous = _stateMachine.History.Previous;
+        LinkedListNode<State> previous = _stateMachine.History.Previous;
 
         _stateMachine.History.SelectPrevious();
 
@@ -53,7 +53,7 @@ public class StateHistoryTest
         _stateMachine.Update();
         _stateMachine.History.SelectFirst();
 
-        State next = _stateMachine.History.Next;
+        LinkedListNode<State> next = _stateMachine.History.Next;
 
         _stateMachine.History.SelectNext();
 
@@ -83,7 +83,7 @@ public class StateHistoryTest
         _stateMachine.Update();
         _stateMachine.History.SelectFirst();
 
-        State last = _stateMachine.History.Last;
+        LinkedListNode<State> last = _stateMachine.History.Last;
 
         _stateMachine.History.SelectLast();
 
@@ -95,7 +95,7 @@ public class StateHistoryTest
     {
         _stateMachine.Update();
 
-        State first = _stateMachine.History.First;
+        LinkedListNode<State> first = _stateMachine.History.First;
 
         _stateMachine.History.SelectFirst();
 
@@ -110,7 +110,7 @@ public class StateHistoryTest
         _stateMachine.Update();
         _stateMachine.Update();
 
-        State last = _stateMachine.History.Last;
+        LinkedListNode<State> last = _stateMachine.History.Last;
 
         Assert.AreEqual(last, _stateMachine.History.Current);
         Assert.AreEqual(_stateMachine.History.ActiveIndex, 4);
@@ -121,7 +121,7 @@ public class StateHistoryTest
     {
         _stateMachine.Update();
 
-        State current = _stateMachine.History.Current;
+        LinkedListNode<State> current = _stateMachine.History.Current;
 
         Assert.AreEqual(_stateMachine.History.ActiveIndex, 1);
 
