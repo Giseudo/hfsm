@@ -1,0 +1,8 @@
+.state-badge__container {
+    background-color: rgba(0, 0, 0, 0.64);
+}
+
+.state-badge--selected .state-badge__container {
+    background-color: rgb(0, 121, 63);
+    color: rgba(255, 255, 255, 255);
+}

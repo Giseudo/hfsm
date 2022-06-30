@@ -2,7 +2,7 @@
     <ui:VisualElement class="state-info" style="background-color: rgba(121, 121, 121, 0.3); border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
         <ui:Label text="CURRENT STATE" display-tooltip-when-elided="true" class="state-info__title" style="font-size: 10px; -unity-font-style: bold; word-spacing: 20px;" />
         <ui:VisualElement style="flex-direction: row; margin-top: 5px; justify-content: space-between; align-items: flex-end;">
-            <StateBadge class="state-info__state" text="Walk" />
+            <StateBadge text="Walk" name="State" class="state-info__state" />
             <ui:Label text="00:15s" display-tooltip-when-elided="true" class="state-info__time" style="-unity-font-style: bold; font-size: 10px;" />
         </ui:VisualElement>
         <ui:VisualElement style="background-color: rgba(121, 121, 121, 0.3); border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">

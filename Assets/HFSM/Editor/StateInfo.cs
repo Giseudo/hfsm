@@ -24,6 +24,10 @@ public class StateInfo : VisualElement
         set { this.Q<Label>(null, "state-info__time").text = value; }
     }
 
+    public StateBadge stateBadge {
+        get { return this.Q<StateBadge>("State"); }
+    }
+
     public string transitions {
         // TODO clear & add state badges on demand?
         get { return this._transitions; }
