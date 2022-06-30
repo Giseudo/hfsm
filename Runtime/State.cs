@@ -42,11 +42,11 @@ namespace HFSM
         {
             OnEnter();
 
-            if (_currentSubState == null && _defaultSubState != null)
-                _currentSubState = _defaultSubState;
-
             if (_currentSubState != null)
                 ChangeSubState(_currentSubState);
+
+            if (_currentSubState == null && _defaultSubState != null)
+                ChangeSubState(_defaultSubState);
 
             EnterTransitions();
         }

@@ -38,20 +38,30 @@ public class StateMachineDebugger : VisualElement
     public void Start(StateMachine stateMachine)
     {
         _stateMachine = stateMachine;
-        _history.Start(stateMachine);
 
         if (stateMachine.Asset == null) return;
 
         // TODO add support to empty asset & asset change
 
         if (!Application.isPlaying)
+        {
+            _history.RemoveFromHierarchy();
             stateMachine.Init();
+        }
+        else
+        {
+            _history.Start(stateMachine);
+        }
 
         foreach (State state in stateMachine.Root.SubStates.Values)
             AddCards(state, new StateCard(FormatTitle(state)), this);
     }
 
-    public void Destroy() => destroyed.Invoke();
+    public void Destroy()
+    {
+        destroyed.Invoke();
+        _history.Destroy();
+    }
 
     public void AddCards(State state, StateCard card, VisualElement parent)
     { 
