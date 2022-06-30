@@ -11,6 +11,18 @@ public class StateBadge : VisualElement
         get { return this.Q<Label>(null, "state-badge__label").text; }
         set { this.Q<Label>(null, "state-badge__label").text = value; }
     }
+    public bool selected {
+        get { return this._selected; }
+        set
+        {
+            if (value)
+                AddToClassList("state-badge--selected");
+            else
+                RemoveFromClassList("state-badge--selected");
+        }
+    }
+
+    private bool _selected;
 
     public StateBadge()
     {
@@ -39,6 +51,7 @@ public class StateBadge : VisualElement
     public new class UxmlTraits : VisualElement.UxmlTraits
     {
         UxmlStringAttributeDescription _text = new UxmlStringAttributeDescription { name = "text", defaultValue = "State Name" };
+        UxmlBoolAttributeDescription _selected = new UxmlBoolAttributeDescription { name = "selected", defaultValue = false };
  
         public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
         {
@@ -52,6 +65,7 @@ public class StateBadge : VisualElement
             var ate = ve as StateBadge;
 
             ate.text = _text.GetValueFromBag(bag, cc);
+            ate.selected = _selected.GetValueFromBag(bag, cc);
         }
     }
 }

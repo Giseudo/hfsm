@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
@@ -74,14 +75,46 @@ public class StateMachineHistory : VisualElement
 
     public void OnStateSelect(LinkedListNode<State> node)
     {
-        PreviousInfo.state = node.Previous?.Value?.GetType().ToString();
+        // Set previous state info
+        bool hasPrevious = node.Previous != null;
+
+        PreviousInfo.style.display = !hasPrevious ? DisplayStyle.None : DisplayStyle.Flex;
+
+        if (hasPrevious)
+        {
+            // FIXME we need to make get every possible transition from bottom to top of the tree
+            PreviousInfo.transitions = String.Join(
+                ", ",
+                node.Previous.Value.Parent.SubStates
+                    .Where(state => state.GetType() != node.Previous.Value.GetType())
+                    .Select(state => FormatTitle(state.Value))
+            );
+            PreviousInfo.state = node.Previous?.Value?.GetType().ToString();
+        }
+
+        // Set current state info
         CurrentInfo.state = node.Value.GetType().ToString();
+        CurrentInfo.transitions = String.Join(
+            ", ",
+            node.Value.Parent.SubStates
+                .Where(state => state.GetType() != node.Value.GetType())
+                .Select(state => FormatTitle(state.Value))
+        );
+        CurrentInfo.stateBadge.selected = true;
 
-        PreviousInfo.style.display = node.Previous == null ? DisplayStyle.None : DisplayStyle.Flex;
-
+        // Set actions values
         activeIndex = _stateMachine.History.ActiveIndex.ToString();
         totalCount = (_stateMachine.History.List.Count - 1).ToString();
 
         stateSelected.Invoke(node);
+    }
+
+    public string FormatTitle(State state)
+    {
+        string title = state.GetType().ToString();
+
+        string[] values = title.Split(".");
+
+        return values[values.Length - 1];
     }
 }
