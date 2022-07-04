@@ -3,6 +3,8 @@ using HFSM;
 
 public class JumpState : State
 {
+    public override string Name => "Jump";
+
     private CharacterController _controller;
     private Vector3 _jumpVelocity;
     public float jumpHeight = 2f;

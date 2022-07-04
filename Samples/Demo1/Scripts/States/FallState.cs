@@ -3,6 +3,8 @@ using HFSM;
 
 public class FallState : State
 {
+    public override string Name => "Fall";
+
     private CharacterController _controller;
     private Vector3 _gravity;
     public float speed = 2f;

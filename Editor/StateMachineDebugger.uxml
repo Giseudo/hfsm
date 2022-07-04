@@ -1,7 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Assets/HFSM/Editor/StateMachineDebugger.uss?fileID=7433441132597879392&amp;guid=b299daf9a030f794cb663e5cbe15e629&amp;type=3#StateMachineDebugger" />
-    <StateMachineHistory name="History" />
-    <StateCard title="Root" name="Preview">
-        <ui:VisualElement name="Content" />
-    </StateCard>
+    <ui:ScrollView style="max-height: 300px;">
+        <ui:VisualElement style="margin-right: 5px;">
+            <StateMachineHistory name="History" />
+            <ui:VisualElement name="Content" />
+        </ui:VisualElement>
+    </ui:ScrollView>
 </ui:UXML>
