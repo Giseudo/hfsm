@@ -29,7 +29,6 @@ public class StateInfo : VisualElement
     }
 
     public string transitions {
-        // TODO clear & add state badges on demand?
         get { return this._transitions; }
         set {
             VisualElement container = this.Q<VisualElement>(null, "state-info__transitions");
