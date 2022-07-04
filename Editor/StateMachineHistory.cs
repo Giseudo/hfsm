@@ -106,7 +106,7 @@ public class StateMachineHistory : VisualElement
 
         while (currentState != null)
         {
-            // loop throught all parents sub states
+            // TODO loop throught all parents sub states
             // get the sub state transitions
             // check if the state is present
             // if it is, then this sub state should be included
