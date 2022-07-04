@@ -5,6 +5,8 @@ namespace Demo1
 {
     public class GroundedState : State
     {
+        public override string Name => "Grounded";
+
         private CharacterController _controller;
         private State _idleState = new IdleState();
         private State _walkState = new WalkState();

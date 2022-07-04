@@ -3,6 +3,8 @@ using HFSM;
 
 public class RunState : State
 {
+    public override string Name => "Run";
+
     private CharacterController _controller;
     public float speed = 5f;
 

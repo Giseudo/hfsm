@@ -25,6 +25,8 @@ namespace HFSM
         public Action<State, State> stateChanged = delegate { };
         public bool IsLeaf => _subStates.Count == 0;
 
+        public virtual string Name => "";
+
         public void Start(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;

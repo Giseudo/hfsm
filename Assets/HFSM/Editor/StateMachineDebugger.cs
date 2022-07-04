@@ -54,7 +54,7 @@ public class StateMachineDebugger : VisualElement
         }
 
         foreach (State state in stateMachine.Root.SubStates.Values)
-            AddCards(state, new StateCard(FormatTitle(state)), this);
+            AddCards(state, new StateCard(state.Name), this);
     }
 
     public void Destroy()
@@ -101,15 +101,6 @@ public class StateMachineDebugger : VisualElement
 
         // Add children states
         foreach (State child in state.SubStates.Values)
-            AddCards(child, new StateCard(FormatTitle(child)), card);
-    }
-
-    public string FormatTitle(State state)
-    {
-        string title = state.GetType().ToString();
-
-        string[] values = title.Split(".");
-
-        return values[values.Length - 1];
+            AddCards(child, new StateCard(child.Name), card);
     }
 }

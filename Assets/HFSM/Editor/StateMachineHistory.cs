@@ -83,23 +83,13 @@ public class StateMachineHistory : VisualElement
         if (hasPrevious)
         {
             // FIXME we need to make get every possible transition from bottom to top of the tree
-            PreviousInfo.transitions = String.Join(
-                ", ",
-                node.Previous.Value.Parent.SubStates
-                    .Where(state => state.GetType() != node.Previous.Value.GetType())
-                    .Select(state => FormatTitle(state.Value))
-            );
-            PreviousInfo.state = node.Previous?.Value?.GetType().ToString();
+            PreviousInfo.transitions = GetTransitions(node.Previous.Value);
+            PreviousInfo.state = node.Previous.Value.Name;
         }
 
         // Set current state info
-        CurrentInfo.state = node.Value.GetType().ToString();
-        CurrentInfo.transitions = String.Join(
-            ", ",
-            node.Value.Parent.SubStates
-                .Where(state => state.GetType() != node.Value.GetType())
-                .Select(state => FormatTitle(state.Value))
-        );
+        CurrentInfo.state = node.Value.Name;
+        CurrentInfo.transitions = GetTransitions(node.Value);
         CurrentInfo.stateBadge.selected = true;
 
         // Set actions values
@@ -109,12 +99,34 @@ public class StateMachineHistory : VisualElement
         stateSelected.Invoke(node);
     }
 
-    public string FormatTitle(State state)
+    private string GetTransitions(State state)
     {
-        string title = state.GetType().ToString();
+        State currentState = state.Parent;
+        string value = "";
 
-        string[] values = title.Split(".");
+        while (currentState != null)
+        {
+            // loop throught all parents sub states
+            // get the sub state transitions
+            // check if the state is present
+            // if it is, then this sub state should be included
+            // if not, there's no transition to that target state
 
-        return values[values.Length - 1];
+            var transitions = currentState.SubStates
+                .Where(subState => subState.GetType() != state.GetType())
+                .Select(subState => subState.Value.Name);
+
+            if (transitions.Count() > 0)
+            {
+                if (value != "")
+                    value += ", ";
+
+                value += String.Join(", ", transitions);
+            }
+
+            currentState = currentState.Parent;
+        }
+
+        return value;
     }
 }

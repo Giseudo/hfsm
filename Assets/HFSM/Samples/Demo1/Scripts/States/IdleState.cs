@@ -1,4 +1,9 @@
 using HFSM;
 
-public class IdleState : State
-{ }
+namespace Demo1
+{
+    public class IdleState : State
+    {
+        public override string Name => "Idle";
+    }
+}
