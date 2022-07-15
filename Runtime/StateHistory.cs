@@ -31,11 +31,15 @@ namespace HFSM
         {
             _stateMachine = stateMachine;
 
+            if (_stateMachine.Root == null) return;
+
             _stateMachine.Root.stateChanged += OnStateChange;
         }
 
         public void Destroy()
         {
+            if (_stateMachine.Root == null) return;
+
             _stateMachine.Root.stateChanged -= OnStateChange;
         }
 
@@ -70,7 +74,7 @@ namespace HFSM
 
         public void SelectPrevious()
         {
-            if (_currentState.Previous == null) return;
+            if (_currentState?.Previous == null) return;
 
             _activeIndex--;
 
@@ -79,7 +83,7 @@ namespace HFSM
 
         public void SelectNext()
         {
-            if (_currentState.Next == null) return;
+            if (_currentState?.Next == null) return;
 
             _activeIndex++;
 

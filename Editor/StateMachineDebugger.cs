@@ -39,28 +39,31 @@ public class StateMachineDebugger : VisualElement
     {
         _stateMachine = stateMachine;
 
+        _history.style.display = !Application.isPlaying || stateMachine.Asset == null ? DisplayStyle.None : DisplayStyle.Flex;
+
         if (stateMachine.Asset == null) return;
 
-        // TODO add support to empty asset & asset change
-
         if (!Application.isPlaying)
-        {
-            _history.RemoveFromHierarchy();
             stateMachine.Init();
-        }
         else
-        {
             _history.Start(stateMachine);
-        }
 
-        foreach (State state in stateMachine.Root.SubStates.Values)
-            AddCards(state, new StateCard(state.Name), this);
+        PopulateCards();
     }
 
     public void Destroy()
     {
         destroyed.Invoke();
+
+        if (!Application.isPlaying) return;
+
         _history.Destroy();
+    }
+
+    private void PopulateCards()
+    {
+        foreach (State state in _stateMachine.Root.SubStates.Values)
+            AddCards(state, new StateCard(state.Name), this);
     }
 
     public void AddCards(State state, StateCard card, VisualElement parent)
@@ -102,5 +105,16 @@ public class StateMachineDebugger : VisualElement
         // Add children states
         foreach (State child in state.SubStates.Values)
             AddCards(child, new StateCard(child.Name), card);
+    }
+
+    public void Reset()
+    {
+        Clear();
+
+        _stateMachine.History.Clear();
+
+        if (_stateMachine.Asset == null) return;
+
+        PopulateCards();
     }
 }

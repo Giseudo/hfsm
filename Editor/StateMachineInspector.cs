@@ -45,8 +45,7 @@ namespace HFSM
 
         public void OnAssetChange(StateMachineAsset asset)
         {
-            _debugger?.Clear();
-            _debugger?.Start(_stateMachine);
+            _debugger?.Reset();
         }
     }
 }
