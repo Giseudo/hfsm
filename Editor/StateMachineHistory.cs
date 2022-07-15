@@ -82,7 +82,6 @@ public class StateMachineHistory : VisualElement
 
         if (hasPrevious)
         {
-            // FIXME we need to make get every possible transition from bottom to top of the tree
             PreviousInfo.transitions = GetTransitions(node.Previous.Value);
             PreviousInfo.state = node.Previous.Value.Name;
         }
@@ -101,19 +100,15 @@ public class StateMachineHistory : VisualElement
 
     private string GetTransitions(State state)
     {
+        State previousState = state;
         State currentState = state.Parent;
         string value = "";
 
         while (currentState != null)
         {
-            // TODO loop throught all parents sub states
-            // get the sub state transitions
-            // check if the state is present
-            // if it is, then this sub state should be included
-            // if not, there's no transition to that target state
-
             var transitions = currentState.SubStates
-                .Where(subState => subState.GetType() != state.GetType())
+                .Where(subState => subState.Value.GetType() != state.GetType())
+                .Where(subState => subState.Value.GetType() != previousState.GetType())
                 .Select(subState => subState.Value.Name);
 
             if (transitions.Count() > 0)
@@ -124,6 +119,7 @@ public class StateMachineHistory : VisualElement
                 value += String.Join(", ", transitions);
             }
 
+            previousState = currentState;
             currentState = currentState.Parent;
         }
 
