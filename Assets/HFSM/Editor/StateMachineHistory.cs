@@ -59,8 +59,20 @@ public class StateMachineHistory : VisualElement
         LastButton.clicked += _stateMachine.History.SelectLast;
 
         _stateMachine.History.stateSelected += OnStateSelect;
+        _stateMachine.assetChanged += OnAssetChange;
 
         OnStateSelect(_stateMachine.History.Current);
+    }
+
+    private void OnAssetChange(StateMachineAsset asset)
+    {
+        _stateMachine.History.Clear();
+
+        PreviousInfo.style.display = DisplayStyle.None;
+        CurrentInfo.style.display = DisplayStyle.None;
+
+        activeIndex = "0";
+        totalCount = "0";
     }
 
     public void Destroy()
@@ -76,8 +88,9 @@ public class StateMachineHistory : VisualElement
     public void OnStateSelect(LinkedListNode<State> node)
     {
         // Set previous state info
-        bool hasPrevious = node.Previous != null;
+        bool hasPrevious = node?.Previous != null;
 
+        CurrentInfo.style.display = DisplayStyle.Flex;
         PreviousInfo.style.display = !hasPrevious ? DisplayStyle.None : DisplayStyle.Flex;
 
         if (hasPrevious)
