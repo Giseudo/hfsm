@@ -13,7 +13,7 @@ public class StateTest
     {
         GameObject context = new GameObject();
 
-        _stateMachine = new TestStateMachine(context);
+        _stateMachine = context.AddComponent<StateMachine>();
         _state = Substitute.For<TestState>();
     }
 
@@ -219,11 +219,5 @@ public class StateTest
 
     public class OtherState : State
     { }
-
-    public class TestStateMachine : StateMachine
-    {
-        public TestStateMachine(GameObject context) : base(context)
-        { }
-    }
 }
 

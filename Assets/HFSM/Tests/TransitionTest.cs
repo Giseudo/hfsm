@@ -14,7 +14,7 @@ public class TransitionTest
     {
         GameObject context = new GameObject();
 
-        _stateMachine = new TestStateMachine(context);
+        _stateMachine = context.AddComponent<StateMachine>();
     }
 
     [Test]
@@ -132,11 +132,5 @@ public class TransitionTest
 
     public class TestState : State
     { }
-
-    public class TestStateMachine : StateMachine
-    {
-        public TestStateMachine(GameObject context) : base(context)
-        { }
-    }
 }
 

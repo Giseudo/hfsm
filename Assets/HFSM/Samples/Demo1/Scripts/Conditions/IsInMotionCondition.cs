@@ -13,7 +13,7 @@ public class IsInMotionCondition : Condition
 
     public override void OnStart()
     {
-        StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+        StateMachine.TryGetComponent<CharacterController>(out _controller);
     }
 
     public override void OnUpdate()

@@ -1,36 +1,61 @@
+using System;
 using UnityEngine;
 
 namespace HFSM
 {
-    public abstract class StateMachine
+    [Serializable]
+    public class StateMachine : MonoBehaviour
     {
-        private RootState _rootState = new RootState();
-        private GameObject _context;
+        [SerializeField]
+        private StateMachineAsset _asset;
+        private StateMachineAsset _previousAsset;
+        private State _root;
+        private StateHistory _history = new StateHistory();
 
-        public GameObject Context => _context;
-        public GameObject Ctx => _context;
-        public RootState Root => _rootState;
+        public Action<State, State> stateChanged = delegate { };
+        public Action<StateMachineAsset> assetChanged = delegate { };
 
-        public StateMachine(GameObject context) {
-            _context = context;
+        public State Root => _root;
+        public StateMachineAsset Asset => _asset;
+        public StateHistory History => _history;
+
+        public void Awake() => Init();
+
+        public void Start()
+        {
+            _history.Start(this);
         }
 
-        public virtual void Start() {
-            Root.Start(this);
-            Root.Enter();
+        public void Restart()
+        {
+            _root?.Exit();
+
+            Init();
+            Start();
+
+            _root?.Enter();
         }
 
-        public virtual void Update() {
-            Root.Update();
+        public void Init() => _root = _asset?.Init(this);
+
+        public void OnEnable() => _root?.Enter();
+
+        public void OnDisable() => _root?.Exit();
+
+        public void Update() => _root?.Update();
+
+        public void SetAsset(StateMachineAsset value)
+        {
+            if (_previousAsset == value) return;
+
+            _previousAsset = _asset;
+            _asset = value;
+
+            Restart();
+
+            assetChanged.Invoke(value);
         }
 
-        public virtual void Stop() {
-            Root.Exit();
-        }
-
-        public void SetVariable<T>() {}
-        public void GetVariable<T>() {}
-        public void GetComponent<T>() {}
-        public void TryGetComponent<T>() {}
+        public void OnValidate() => SetAsset(_asset);
     }
 }

@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/HFSM/Editor/StateBadge.uss?fileID=7433441132597879392&amp;guid=b09daa51ac1f01d448e404ebb5471edb&amp;type=3#StateBadge" />
+    <ui:VisualElement class="state-badge__container" display-tooltip-when-elided="true" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; flex-shrink: 1; margin-right: 5px; margin-bottom: 5px;">
+        <ui:Label text="State Name" class="state-badge__label" style="-unity-font-style: bold; font-size: 11px;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -5,6 +5,8 @@ namespace Demo1
 {
     public class GroundedState : State
     {
+        public override string Name => "Grounded";
+
         private CharacterController _controller;
         private State _idleState = new IdleState();
         private State _walkState = new WalkState();
@@ -12,7 +14,7 @@ namespace Demo1
 
         protected override void OnStart()
         {
-            StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+            StateMachine.TryGetComponent<CharacterController>(out _controller);
 
             LoadSubState(_idleState);
             LoadSubState(_walkState);
@@ -58,14 +60,14 @@ namespace Demo1
             AddTransition(
                 _runState,
                 _idleState,
-                new Condition[]{
+                new Condition[] {
                     new IsMovingCondition(true)
                 }
             );
             AddTransition(
                 _runState,
                 _walkState,
-                new Condition[]{
+                new Condition[] {
                     new IsMovingCondition(),
                     new IsRunningCondition(true)
                 },

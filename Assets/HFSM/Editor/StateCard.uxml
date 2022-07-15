@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/HFSM/Editor/StateCard.uss?fileID=7433441132597879392&amp;guid=d857fe070e367964b99e297d85889c41&amp;type=3#StateCard" />
+    <ui:VisualElement class="state-card">
+        <ui:Label text="State Name" display-tooltip-when-elided="true" name="Title" class="state-card__title" />
+        <ui:VisualElement name="Content" class="state-card__content" />
+    </ui:VisualElement>
+</ui:UXML>

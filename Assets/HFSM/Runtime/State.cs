@@ -5,20 +5,27 @@ using UnityEngine;
 
 namespace HFSM
 {
-    public abstract class State
+    [Serializable]
+    public class State
     {
         private State _currentSubState;
         private State _defaultSubState;
+        [SerializeField]
         private State _parent;
         private StateMachine _stateMachine;
 
         private Dictionary<Type, State> _subStates = new Dictionary<Type, State>();
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
 
+        public State Parent => _parent;
         public State CurrentSubState => _currentSubState;
         public StateMachine StateMachine => _stateMachine;
         public Dictionary<Type, State> SubStates => _subStates;
         public Dictionary<Type, List<Transition>> Transitions => _transitions;
+        public Action<State, State> stateChanged = delegate { };
+        public bool IsLeaf => _subStates.Count == 0;
+
+        public virtual string Name => "";
 
         public void Start(StateMachine stateMachine)
         {
@@ -37,10 +44,11 @@ namespace HFSM
         {
             OnEnter();
 
-            if (_currentSubState == null && _defaultSubState != null)
-                _currentSubState = _defaultSubState;
+            if (_currentSubState != null)
+                ChangeSubState(_currentSubState);
 
-            _currentSubState?.Enter();
+            if (_currentSubState == null && _defaultSubState != null)
+                ChangeSubState(_defaultSubState);
 
             EnterTransitions();
         }
@@ -57,6 +65,7 @@ namespace HFSM
         public void Exit()
         {
             _currentSubState?.Exit();
+            _currentSubState = null;
 
             ExitTransitions();
 
@@ -69,6 +78,7 @@ namespace HFSM
                 _defaultSubState = subState;
 
             subState._parent = this;
+            subState.stateChanged += (from, to) => stateChanged.Invoke(from, to);
 
             try
             {
@@ -180,6 +190,9 @@ namespace HFSM
             ExitTransitions();
 
             var newState = _subStates[state.GetType()];
+
+            if (newState.IsLeaf)
+                stateChanged.Invoke(_currentSubState, newState);
 
             _currentSubState = newState;
             newState.Enter();

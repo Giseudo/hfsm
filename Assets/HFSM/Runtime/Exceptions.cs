@@ -16,4 +16,8 @@ namespace HFSM {
     public class NeglectedTriggerException : Exception {
         public NeglectedTriggerException(string msg) : base(msg) { }
     }
+
+    public class HistoryStateNotFoundException : Exception {
+        public HistoryStateNotFoundException(string msg) : base(msg) { }
+    }
 }

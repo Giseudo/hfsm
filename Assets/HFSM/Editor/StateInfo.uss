@@ -1,0 +1,9 @@
+.state-info {
+}
+
+.state-info--disabled {
+    opacity: .4;
+}
+
+.state-info__title {
+}

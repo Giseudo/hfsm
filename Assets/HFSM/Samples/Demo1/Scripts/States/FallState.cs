@@ -3,13 +3,15 @@ using HFSM;
 
 public class FallState : State
 {
+    public override string Name => "Fall";
+
     private CharacterController _controller;
     private Vector3 _gravity;
     public float speed = 2f;
 
     protected override void OnStart()
     {
-        StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+        StateMachine.TryGetComponent<CharacterController>(out _controller);
     }
 
     protected override void OnEnter()

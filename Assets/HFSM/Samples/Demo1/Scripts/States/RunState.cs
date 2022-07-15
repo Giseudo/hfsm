@@ -3,12 +3,14 @@ using HFSM;
 
 public class RunState : State
 {
+    public override string Name => "Run";
+
     private CharacterController _controller;
     public float speed = 5f;
 
     protected override void OnStart()
     {
-        StateMachine.Context.TryGetComponent<CharacterController>(out _controller);
+        StateMachine.TryGetComponent<CharacterController>(out _controller);
     }
 
     protected override void OnUpdate()
