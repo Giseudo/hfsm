@@ -77,7 +77,11 @@ public class StateMachineDebugger : VisualElement
 
             while(next != null)
             {
-                if (next == state) card.disabled = false;
+                if (next == state)
+                {
+                    card.disabled = false;
+                    card.selected = next.IsLeaf;
+                }
 
                 next = next.CurrentSubState;
             }
@@ -86,10 +90,15 @@ public class StateMachineDebugger : VisualElement
                 State next = node.Value;
 
                 card.disabled = true;
+                card.selected = false;
 
                 while (next != null)
                 {
-                    if (next == state) card.disabled = false;
+                    if (next == state)
+                    {
+                        card.disabled = false;
+                        card.selected = next.IsLeaf;
+                    }
 
                     next = next.Parent;
                 }

@@ -18,7 +18,7 @@
 }
 
 .state-card--disabled {
-    opacity: .4;
+    opacity: 0.4;
 }
 
 .state-card__title {
@@ -29,4 +29,9 @@
 
 .state-card__content {
     padding: 5px 5px 0 5px;
+}
+
+.state-card--selected .state-card {
+    background-color: rgb(70, 96, 124);
+    border-color: transparent;
 }

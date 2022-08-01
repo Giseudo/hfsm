@@ -11,6 +11,7 @@ public class StateBadge : VisualElement
         get { return this.Q<Label>(null, "state-badge__label").text; }
         set { this.Q<Label>(null, "state-badge__label").text = value; }
     }
+
     public bool selected {
         get { return this._selected; }
         set
