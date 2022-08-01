@@ -8,6 +8,7 @@ using HFSM;
 public class StateCard : VisualElement
 {
     static string DisabledClass = "state-card--disabled";
+    static string SelectedClass = "state-card--selected";
 
     public override VisualElement contentContainer => this.Query<VisualElement>("Content");
 
@@ -26,7 +27,17 @@ public class StateCard : VisualElement
         }
     }
 
+    public bool selected {
+        get { return this._selected; }
+        set
+        {
+            if (value) AddToClassList(SelectedClass);
+            else RemoveFromClassList(SelectedClass);
+        }
+    }
+
     private bool _disabled;
+    private bool _selected;
 
     public StateCard()
     {
@@ -56,6 +67,7 @@ public class StateCard : VisualElement
     {
         UxmlStringAttributeDescription _title = new UxmlStringAttributeDescription { name = "title", defaultValue = "State Name" };
         UxmlBoolAttributeDescription _disabled = new UxmlBoolAttributeDescription { name = "disabled", defaultValue = false };
+        UxmlBoolAttributeDescription _selected = new UxmlBoolAttributeDescription { name = "selected", defaultValue = false };
  
         public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
         {
@@ -69,6 +81,7 @@ public class StateCard : VisualElement
             var ate = ve as StateCard;
 
             ate.title = _title.GetValueFromBag(bag, cc);
+            ate.selected = _selected.GetValueFromBag(bag, cc);
             ate.disabled = _disabled.GetValueFromBag(bag, cc);
         }
     }
