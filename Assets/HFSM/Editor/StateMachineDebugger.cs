@@ -51,6 +51,11 @@ public class StateMachineDebugger : VisualElement
         PopulateCards();
     }
 
+    public void Update()
+    {
+        _history?.Update();
+    }
+
     public void Destroy()
     {
         destroyed.Invoke();
