@@ -18,8 +18,6 @@ public class StateHistoryTest
 
         _stateMachine = context.AddComponent<StateMachine>();
         _stateMachine.SetAsset(ScriptableObject.CreateInstance<TestStateMachineAsset>());
-        _stateMachine.Awake();
-        _stateMachine.Start();
     }
 
     [Test]
@@ -150,6 +148,24 @@ public class StateHistoryTest
         Assert.Less(_stateMachine.History.List.Count, 1);
         Assert.AreEqual(_stateMachine.History.ActiveIndex, 0);
     }
+
+    [Test]
+    public void ShouldUpdateCurrentStateTimer()
+    {
+        /*
+        Action<State, State> OnStateChange = (to, from) => Debug.Log("Trigou");
+
+        _stateMachine.stateChanged += OnStateChange;
+
+        _stateMachine.Update();
+
+        Assert.AreEqual(_stateMachine.History.CurrentTime, Time.time);
+        */
+    }
+
+    [Test]
+    public void ShouldStopPreviousStatesTimer()
+    { }
 
     [Test]
     public void ShouldDestroy()
