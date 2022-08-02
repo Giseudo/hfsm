@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -5,22 +6,18 @@ namespace HFSM
 {
     public class StateHistory
     {
-        private LinkedList<State> _list = new LinkedList<State>();
         private StateMachine _stateMachine;
+        private LinkedList<State> _list = new LinkedList<State>();
+        private StateHistoryTimers _timers = new StateHistoryTimers();
         private LinkedListNode<State> _currentState;
         private int _activeIndex = 0;
         private bool _autoSelectLast = true;
-
-        // TODO tests
-        // TODO populate
-        // TODO clear
-        // TODO update current time
-        private Dictionary<int, string> _timers = new Dictionary<int, string>();
 
         public Action<LinkedListNode<State>> stateSelected = delegate { };
 
         public LinkedList<State> List => _list;
         public int ActiveIndex => _activeIndex;
+        public StateHistoryTimers Timers => _timers;
         public LinkedListNode<State> First => _list.First;
         public LinkedListNode<State> Last => _list.Last;
         public LinkedListNode<State> Next => _currentState.Next;
@@ -46,6 +43,7 @@ namespace HFSM
         public void Clear()
         {
             _list = new LinkedList<State>();
+            _timers = new StateHistoryTimers();
             _activeIndex = 0;
             _currentState = null;
         }
@@ -120,11 +118,14 @@ namespace HFSM
             stateSelected.Invoke(state);
         }
 
+        public void Update() => _timers?.Update();
+
         private void OnStateChange(State from, State to)
         {
             if (to == null) return;
 
             _list.AddLast(to);
+            _timers.ActiveIndex = _list.Count - 1;
 
             if (!_autoSelectLast) return;
 

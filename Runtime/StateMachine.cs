@@ -42,7 +42,11 @@ namespace HFSM
 
         public void OnDisable() => _root?.Exit();
 
-        public void Update() => _root?.Update();
+        public void Update() 
+        {
+            _root?.Update();
+            _history?.Update();
+        }
 
         public void SetAsset(StateMachineAsset value)
         {
