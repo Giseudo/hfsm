@@ -75,6 +75,15 @@ public class StateMachineHistory : VisualElement
         totalCount = "0";
     }
 
+    public void Update()
+    {
+        if (_stateMachine.History.Timers.List.TryGetValue(_stateMachine.History.ActiveIndex - 1, out float previousTime))
+            PreviousInfo.time = $"{Math.Round(previousTime, 2).ToString()}s";
+
+        if (_stateMachine.History.Timers.List.TryGetValue(_stateMachine.History.ActiveIndex, out float time))
+            CurrentInfo.time = $"{Math.Round(time, 2).ToString()}s";
+    }
+
     public void Destroy()
     {
         FirstButton.clicked -= _stateMachine.History.SelectFirst;

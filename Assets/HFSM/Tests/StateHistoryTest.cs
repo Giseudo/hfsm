@@ -18,8 +18,6 @@ public class StateHistoryTest
 
         _stateMachine = context.AddComponent<StateMachine>();
         _stateMachine.SetAsset(ScriptableObject.CreateInstance<TestStateMachineAsset>());
-        _stateMachine.Awake();
-        _stateMachine.Start();
     }
 
     [Test]
