@@ -90,7 +90,7 @@ public class StateInfo : VisualElement
         UxmlStringAttributeDescription _title = new UxmlStringAttributeDescription { name = "title", defaultValue = "CURRENT STATE" };
         UxmlBoolAttributeDescription _disabled = new UxmlBoolAttributeDescription { name = "disabled", defaultValue = false };
         UxmlStringAttributeDescription _state = new UxmlStringAttributeDescription { name = "state", defaultValue = "State A" };
-        UxmlStringAttributeDescription _time = new UxmlStringAttributeDescription { name = "time", defaultValue = "00:00" };
+        UxmlStringAttributeDescription _time = new UxmlStringAttributeDescription { name = "time", defaultValue = "0s" };
         UxmlStringAttributeDescription _transitions = new UxmlStringAttributeDescription { name = "transitions", defaultValue = "State B, State C, State D" };
  
         public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription

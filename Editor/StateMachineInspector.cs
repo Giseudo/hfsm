@@ -29,6 +29,7 @@ namespace HFSM
 
             _stateMachine = stateMachine;
             _stateMachine.assetChanged += OnAssetChange;
+            EditorApplication.update += Update;
 
             _debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
             _debugger?.Start(stateMachine);
@@ -36,9 +37,17 @@ namespace HFSM
             return root;
         }
 
+        public void Update()
+        {
+            if (!Application.isPlaying) return;
+
+            _debugger?.Update();
+        }
+
         public void OnDestroy()
         {
             _stateMachine.assetChanged -= OnAssetChange;
+            EditorApplication.update -= Update;
 
             _debugger?.Destroy();
         }

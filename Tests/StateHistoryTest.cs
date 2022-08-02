@@ -150,24 +150,6 @@ public class StateHistoryTest
     }
 
     [Test]
-    public void ShouldUpdateCurrentStateTimer()
-    {
-        /*
-        Action<State, State> OnStateChange = (to, from) => Debug.Log("Trigou");
-
-        _stateMachine.stateChanged += OnStateChange;
-
-        _stateMachine.Update();
-
-        Assert.AreEqual(_stateMachine.History.CurrentTime, Time.time);
-        */
-    }
-
-    [Test]
-    public void ShouldStopPreviousStatesTimer()
-    { }
-
-    [Test]
     public void ShouldDestroy()
     {
         bool triggeredStateChange = false;
