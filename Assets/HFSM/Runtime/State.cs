@@ -49,8 +49,6 @@ namespace HFSM
 
             if (_currentSubState == null && _defaultSubState != null)
                 ChangeSubState(_defaultSubState);
-
-            EnterTransitions();
         }
 
         public void Update()
@@ -64,10 +62,10 @@ namespace HFSM
 
         public void Exit()
         {
+            ExitTransitions();
+
             _currentSubState?.Exit();
             _currentSubState = null;
-
-            ExitTransitions();
 
             OnExit();
         }
@@ -88,7 +86,6 @@ namespace HFSM
             {
                 throw new DuplicateSubStateException($"State {GetType()} already contains a substate of type {subState.GetType()}");
             }
-
         }
 
         public void AddTransition(State from, State to, Condition[] conditions, Operator operation = Operator.Or)
