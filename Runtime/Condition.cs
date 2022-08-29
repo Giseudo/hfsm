@@ -19,8 +19,8 @@ namespace HFSM
         public void Update() => OnUpdate();
 
         public void Exit() {
-            Reset();
             OnExit();
+            Reset();
         }
 
         public virtual void OnStart() { }
