@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Giseudo/hfsm/compare/v1.0.0...v1.0.1) (2022-08-29)
+
+
+### Bug Fixes
+
+* package root location ([de0a3d9](https://github.com/Giseudo/hfsm/commit/de0a3d94568a2f0f5e6ddcea8754406000793527))
+
 # 1.0.0 (2022-08-29)
 
 
