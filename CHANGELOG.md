@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Giseudo/hfsm/compare/v1.0.1...v1.0.2) (2022-08-29)
+
+
+### Bug Fixes
+
+* removed scrollview from debugger ([b228888](https://github.com/Giseudo/hfsm/commit/b228888dc492d8723ffd50f6cf79421f2b2d2a49))
+
 ## [1.0.1](https://github.com/Giseudo/hfsm/compare/v1.0.0...v1.0.1) (2022-08-29)
 
 
