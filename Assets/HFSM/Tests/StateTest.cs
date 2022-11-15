@@ -202,6 +202,55 @@ public class StateTest
         Assert.AreEqual(subStateB, _state.CurrentSubState);
     }
 
+    [Test]
+    public void ShouldFinishSubState()
+    {
+        bool triggeredFinishEvent = false;
+
+        State a = new TestState();
+        State b = new FinishOnEnterState();
+
+        b.finished += () => triggeredFinishEvent = true;
+
+        _state.LoadSubState(a);
+        _state.LoadSubState(b);
+        _state.AddTransition(a, b, new Condition[]{ new EnterCondition() });
+
+        _state.Start(_stateMachine);
+        _state.Enter();
+        _state.Update();
+
+        Assert.IsTrue(triggeredFinishEvent);
+    }
+
+    [Test]
+    public void ShouldForceStateChange()
+    {
+        bool changedSubstate = false;
+
+        State a = new TestState();
+        State b = new FinishOnEnterState();
+        State c = new OtherState();
+
+        b.finished += () => _state.ChangeSubState(c);
+        c.entered += () => changedSubstate = true;
+
+        _state.LoadSubState(a);
+        _state.LoadSubState(b);
+        _state.LoadSubState(c);
+        _state.AddTransition(a, b, new Condition[]{ new EnterCondition() });
+
+        _state.Start(_stateMachine);
+        _state.Enter();
+        _state.Update();
+
+        Assert.IsTrue(changedSubstate);
+    }
+
+    [Test]
+    public void ShouldAcceptMultipleEqualSubstates()
+    { }
+
     [TearDown]
     public void TearDown()
     { }
@@ -219,5 +268,10 @@ public class StateTest
 
     public class OtherState : State
     { }
+
+    public class FinishOnEnterState : State
+    {
+        protected override void OnEnter() => Finish();
+    }
 }
 

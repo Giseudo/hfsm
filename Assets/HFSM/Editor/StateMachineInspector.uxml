@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <uie:PropertyField binding-path="_asset" label="Asset" />
-    <ui:Foldout text="Debugger" value="true">
+    <ui:Foldout text="Debugger" value="true" name="DebuggerFoldout">
         <StateMachineDebugger name="StateMachineDebugger" />
     </ui:Foldout>
 </ui:UXML>

@@ -23,6 +23,8 @@ namespace HFSM
         public Dictionary<Type, State> SubStates => _subStates;
         public Dictionary<Type, List<Transition>> Transitions => _transitions;
         public Action<State, State> stateChanged = delegate { };
+        public Action finished = delegate { };
+        public Action entered = delegate { };
         public bool IsLeaf => _subStates.Count == 0;
 
         public virtual string Name => "";
@@ -40,6 +42,13 @@ namespace HFSM
             StartTransitions();
         }
 
+        public void Finish()
+        {
+            OnFinish();
+
+            finished.Invoke();
+        }
+
         public void Enter()
         {
             OnEnter();
@@ -49,6 +58,8 @@ namespace HFSM
 
             if (_currentSubState == null && _defaultSubState != null)
                 ChangeSubState(_defaultSubState);
+            
+            entered.Invoke();
         }
 
         public void Update()
@@ -181,7 +192,7 @@ namespace HFSM
             }
         }
 
-        private void ChangeSubState(State state)
+        public void ChangeSubState(State state)
         {
             _currentSubState?.Exit();
             ExitTransitions();
@@ -200,5 +211,6 @@ namespace HFSM
         protected virtual void OnEnter() { }
         protected virtual void OnUpdate() { }
         protected virtual void OnExit() { }
+        protected virtual void OnFinish() { }
     }
 }
