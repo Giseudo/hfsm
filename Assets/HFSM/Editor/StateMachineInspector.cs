@@ -9,6 +9,7 @@ namespace HFSM
     public class StateMachineInspector : Editor
     {
         StateMachineDebugger _debugger;
+        Foldout _debuggerFoldout;
         StateMachine _stateMachine;
 
         public override VisualElement CreateInspectorGUI()
@@ -33,6 +34,7 @@ namespace HFSM
 
             _debugger = root.Query<StateMachineDebugger>("StateMachineDebugger");
             _debugger?.Start(stateMachine);
+            _debuggerFoldout = root.Query<Foldout>("DebuggerFoldout");
 
             return root;
         }
@@ -40,6 +42,8 @@ namespace HFSM
         public void Update()
         {
             if (!Application.isPlaying) return;
+
+            if (!_debuggerFoldout.value) return;
 
             _debugger?.Update();
         }
