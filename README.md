@@ -1,4 +1,4 @@
 // TODO
-[ ] Dynamically enter state
+[x] Dynamically enter state
 [ ] Add support to multiple same substates
-[ ] OnFinish event
+[x] OnFinish event
