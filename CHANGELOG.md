@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/Giseudo/hfsm/compare/v1.0.2...v1.1.0) (2022-11-15)
+
+
+### Bug Fixes
+
+* prevent debugger update when foldout is collapsed ([f7561b5](https://github.com/Giseudo/hfsm/commit/f7561b58b689bf68f5085e0261f050136cd8d93d))
+
+
+### Features
+
+* added OnFinish state support ([e876403](https://github.com/Giseudo/hfsm/commit/e87640317c3b528aa621927acbb243794e53582c))
+* created StateMachine icon ([a906f04](https://github.com/Giseudo/hfsm/commit/a906f047d2fe87d7f4d1f174ac073e1f09bc5d51))
+* dynamically change substate ([ac9776e](https://github.com/Giseudo/hfsm/commit/ac9776e5ecfebfeff6cc13fe44dcd478db66b056))
+
 ## [1.0.2](https://github.com/Giseudo/hfsm/compare/v1.0.1...v1.0.2) (2022-08-29)
 
 
