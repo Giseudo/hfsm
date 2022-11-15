@@ -24,6 +24,7 @@ namespace HFSM
         public Dictionary<Type, List<Transition>> Transitions => _transitions;
         public Action<State, State> stateChanged = delegate { };
         public Action finished = delegate { };
+        public Action entered = delegate { };
         public bool IsLeaf => _subStates.Count == 0;
 
         public virtual string Name => "";
@@ -57,6 +58,8 @@ namespace HFSM
 
             if (_currentSubState == null && _defaultSubState != null)
                 ChangeSubState(_defaultSubState);
+            
+            entered.Invoke();
         }
 
         public void Update()
