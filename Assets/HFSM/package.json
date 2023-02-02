@@ -1,6 +1,6 @@
 {
     "name": "com.gigi.hfsm",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "displayName": "HFSM",
     "description": "Hierarchical Finite State Machine",
     "unity": "2020.2",

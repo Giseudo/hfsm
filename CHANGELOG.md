@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/Giseudo/hfsm/compare/v1.1.0...v1.2.0) (2023-02-02)
+
+
+### Bug Fixes
+
+* debugger foldout is hidden by default & fixed history flex issue ([bfbbad8](https://github.com/Giseudo/hfsm/commit/bfbbad8f97025723d350dc79db8ce5b8489ea61b))
+* upgrade semantic-release-action ([cd2433e](https://github.com/Giseudo/hfsm/commit/cd2433eadd3d7df6eccb23eb5217de83e4502794))
+
+
+### Features
+
+* upgrade Unity to version 2022.2.1f1 ([8ba6c18](https://github.com/Giseudo/hfsm/commit/8ba6c182a8a05bfc9b0057c6eeef13d7e2d42124))
+
 # [1.1.0](https://github.com/Giseudo/hfsm/compare/v1.0.2...v1.1.0) (2022-11-15)
 
 
