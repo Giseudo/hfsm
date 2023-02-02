@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Giseudo/hfsm/compare/v1.2.0...v1.2.1) (2023-02-02)
+
+
+### Bug Fixes
+
+* history input min-width ([be5d83d](https://github.com/Giseudo/hfsm/commit/be5d83d09e354836768fd538d596e817e8eb236a))
+
 # [1.2.0](https://github.com/Giseudo/hfsm/compare/v1.1.0...v1.2.0) (2023-02-02)
 
 
