@@ -2,9 +2,9 @@
     <ui:VisualElement name="Actions" style="flex-direction: row; align-items: center; margin-bottom: 10px; justify-content: space-between;">
         <ui:Button name="FirstButton" text="First" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
         <ui:Button name="PreviousButton" text="Previous" display-tooltip-when-elided="true" style="width: 75px; margin-left: 5px; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
-        <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 1; flex-shrink: 0; justify-content: center;">
-            <ui:TextField value="0" name="ActiveIndex" binding-path="activeIndex" style="margin-left: 3px; margin-right: 3px; margin-top: 0; margin-bottom: 0;" />
-            <ui:Label text="/ 0" display-tooltip-when-elided="true" binding-path="totalCount" name="TotalCount" style="margin-left: 0; margin-right: 3px;" />
+        <ui:VisualElement style="flex-direction: row; align-items: center; flex-grow: 0; flex-shrink: 1; justify-content: flex-start; flex-basis: auto; max-width: 100px;">
+            <ui:TextField value="0" name="ActiveIndex" binding-path="activeIndex" style="margin-left: 3px; margin-right: 3px; margin-top: 0; margin-bottom: 0; flex-shrink: 1; max-width: 30px;" />
+            <ui:Label text="/ 0" display-tooltip-when-elided="true" binding-path="totalCount" name="TotalCount" style="margin-left: 0; margin-right: 3px; flex-shrink: 1; min-width: 30px;" />
         </ui:VisualElement>
         <ui:Button name="NextButton" text="Next" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 5px; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
         <ui:Button name="LastButton" text="Last" display-tooltip-when-elided="true" style="width: 75px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 1;" />
