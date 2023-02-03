@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/Giseudo/hfsm/compare/v1.2.2...v1.2.3) (2023-02-03)
+
+
+### Bug Fixes
+
+* cloning asset on init ([562b818](https://github.com/Giseudo/hfsm/commit/562b818d395dbe891c1de9e821e3c5de1015386f))
+
 ## [1.2.2](https://github.com/Giseudo/hfsm/compare/v1.2.1...v1.2.2) (2023-02-03)
 
 
