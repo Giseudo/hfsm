@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/Giseudo/hfsm/compare/v1.2.4...v1.2.5) (2023-02-03)
+
+
+### Bug Fixes
+
+* history editor inspector issue ([06ce8bc](https://github.com/Giseudo/hfsm/commit/06ce8bc85e6f33ce4e0a25c3cd99c690f88d584a))
+
 ## [1.2.4](https://github.com/Giseudo/hfsm/compare/v1.2.3...v1.2.4) (2023-02-03)
 
 
