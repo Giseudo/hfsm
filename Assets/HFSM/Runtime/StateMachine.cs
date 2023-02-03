@@ -36,7 +36,12 @@ namespace HFSM
             _root?.Enter();
         }
 
-        public void Init() => _root = _asset?.Init(this);
+        public void Init()
+        {
+            StateMachineAsset asset = ScriptableObject.Instantiate<StateMachineAsset>(_asset);
+
+            _root = asset?.Init(this);
+        }
 
         public void OnEnable() => _root?.Enter();
 
