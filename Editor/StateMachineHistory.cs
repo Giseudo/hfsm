@@ -61,7 +61,9 @@ public class StateMachineHistory : VisualElement
         _stateMachine.History.stateSelected += OnStateSelect;
         _stateMachine.assetChanged += OnAssetChange;
 
-        // OnStateSelect(_stateMachine.History.Current);
+        if (_stateMachine.History.Current == null) return;
+
+        OnStateSelect(_stateMachine.History.Current);
     }
 
     private void OnAssetChange(StateMachineAsset asset)
