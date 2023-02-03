@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/Giseudo/hfsm/compare/v1.2.3...v1.2.4) (2023-02-03)
+
+
+### Bug Fixes
+
+* prevent state selection at start ([f70f014](https://github.com/Giseudo/hfsm/commit/f70f014b4ee5c0fe35287486a8ee13ff0ff8b2e3))
+
 ## [1.2.3](https://github.com/Giseudo/hfsm/compare/v1.2.2...v1.2.3) (2023-02-03)
 
 
