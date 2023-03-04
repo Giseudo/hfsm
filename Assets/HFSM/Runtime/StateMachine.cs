@@ -35,9 +35,9 @@ namespace HFSM
             StateMachineAsset asset = ScriptableObject.Instantiate<StateMachineAsset>(_asset);
 
             _root = asset?.Init(this);
+            _history?.Start(this);
 
-            _history.Start(this);
-
+            _root?.Start(this);
             _root?.Enter();
         }
 

@@ -14,8 +14,6 @@ namespace Demo1
 
             root.LoadSubState(idle);
 
-            root.Start(context);
-
             return root;
         }
     }
