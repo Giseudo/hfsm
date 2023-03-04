@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/Giseudo/hfsm/compare/v1.2.5...v1.2.6) (2023-03-04)
+
+
+### Bug Fixes
+
+* calling root Start on init ([2019c0b](https://github.com/Giseudo/hfsm/commit/2019c0bd3083b31cdd43ff27e0efaf90ba98e222))
+
 ## [1.2.5](https://github.com/Giseudo/hfsm/compare/v1.2.4...v1.2.5) (2023-02-03)
 
 
