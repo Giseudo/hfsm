@@ -9,7 +9,7 @@ namespace Demo1
     {
         public override State Init(StateMachine context)
         {
-            State root = new RootState();
+            State root = new State();
             State grounded = new GroundedState();
             State jump = new JumpState();
             State fall = new FallState();

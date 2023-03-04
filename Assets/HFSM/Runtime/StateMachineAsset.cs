@@ -4,6 +4,6 @@ namespace HFSM
 {
     public abstract class StateMachineAsset : ScriptableObject
     {
-        public abstract State Init(StateMachine context);
+        public abstract State Init(StateMachine origin);
     }
 }

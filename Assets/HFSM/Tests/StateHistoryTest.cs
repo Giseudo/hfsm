@@ -69,7 +69,7 @@ public class StateHistoryTest
 
         _stateMachine.History.SelectIndex(1);
 
-        Assert.AreEqual(state, _stateMachine.History.Current);
+        Assert.AreEqual(state, _stateMachine.History.Current.Value);
         Assert.AreEqual(1, _stateMachine.History.ActiveIndex);
 
         Assert.Throws<IndexOutOfRangeException>(() => _stateMachine.History.SelectIndex(10));
@@ -174,7 +174,7 @@ public class StateHistoryTest
     {
         public override State Init(StateMachine context)
         {
-            State root = new RootState();
+            State root = new State();
             TestStateA stateA = new TestStateA();
             TestStateB stateB = new TestStateB();
 

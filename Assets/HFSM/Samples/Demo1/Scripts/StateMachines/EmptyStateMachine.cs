@@ -9,7 +9,7 @@ namespace Demo1
     {
         public override State Init(StateMachine context)
         {
-            State root = new RootState();
+            State root = new State();
             State idle = new IdleState();
 
             root.LoadSubState(idle);

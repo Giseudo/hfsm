@@ -11,9 +11,11 @@ namespace HFSM
         private StateMachineAsset _previousAsset;
         private State _root;
         private StateHistory _history = new StateHistory();
+        private StateMachineContext _context;
 
         public Action<State, State> stateChanged = delegate { };
         public Action<StateMachineAsset> assetChanged = delegate { };
+        public T GetContext<T>() where T : StateMachineContext => _context as T;
 
         public State Root => _root;
         public StateMachineAsset Asset => _asset;
@@ -59,6 +61,11 @@ namespace HFSM
             Restart();
 
             assetChanged.Invoke(value);
+        }
+
+        public void SetContext(StateMachineContext context)
+        {
+            _context = context;
         }
 
         public void OnValidate()
