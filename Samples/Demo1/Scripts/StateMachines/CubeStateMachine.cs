@@ -49,8 +49,6 @@ namespace Demo1
                 }
             );
 
-            root.Start(context);
-
             return root;
         }
     }
