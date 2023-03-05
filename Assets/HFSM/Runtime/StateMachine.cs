@@ -15,6 +15,7 @@ namespace HFSM
 
         public Action<State, State> stateChanged = delegate { };
         public Action<StateMachineAsset> assetChanged = delegate { };
+        public Action started = delegate { };
         public T GetContext<T>() where T : StateMachineContext => _context as T;
 
         public State Root => _root;
@@ -36,8 +37,10 @@ namespace HFSM
 
             _root = asset?.Init(this);
             _history?.Start(this);
-
             _root?.Start(this);
+
+            started.Invoke();
+
             _root?.Enter();
         }
 

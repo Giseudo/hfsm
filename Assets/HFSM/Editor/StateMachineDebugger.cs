@@ -38,6 +38,7 @@ public class StateMachineDebugger : VisualElement
     public void Start(StateMachine stateMachine)
     {
         _stateMachine = stateMachine;
+        _stateMachine.started += PopulateCards;
 
         _history.style.display = !Application.isPlaying || stateMachine.Asset == null ? DisplayStyle.None : DisplayStyle.Flex;
 
@@ -59,6 +60,7 @@ public class StateMachineDebugger : VisualElement
     public void Destroy()
     {
         destroyed.Invoke();
+        _stateMachine.started -= PopulateCards;
 
         if (!Application.isPlaying) return;
 
@@ -67,6 +69,8 @@ public class StateMachineDebugger : VisualElement
 
     private void PopulateCards()
     {
+        if (_stateMachine.Root == null) return;
+
         foreach (State state in _stateMachine.Root.SubStates.Values)
             AddCards(state, new StateCard(state.Name), this);
     }
